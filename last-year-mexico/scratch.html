@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<body>
+<canvas id="c" width="100" height="100"></canvas>
+<script>
+const colors = {
+  'A': '#ff0000',
+  'B': '#00ff00',
+  'C': '#0000ff',
+  'D': '#000000',
+  'E': '#ffffff',
+  '[': '#555555',
+  ']': '#aaaaaa',
+  '>': '#888888',
+  '<': '#cccccc',
+  '^': '#ffffff',
+};
+function draw(spriteStr, colorOverride) {
+  const ctx = document.getElementById('c').getContext('2d');
+  ctx.scale(4, 4);
+  let x = 0, y = 0;
+  for (let i = 0; i < spriteStr.length; i++) {
+    let char = spriteStr[i];
+    if (char >= '1' && char <= '9') {
+      let count = parseInt(char);
+      i++;
+      char = spriteStr[i];
+      let c = colors[char];
+      if (char === 'A' && colorOverride) c = colorOverride;
+      if (c) {
+        ctx.fillStyle = c;
+        ctx.fillRect(x, y, count, 1);
+      }
+      x += count;
+    } else if (char === '.') {
+      x++;
+    } else if (char === '~') {
+      x = 0; y++;
+    } else {
+      let c = colors[char];
+      if (char === 'A' && colorOverride) c = colorOverride;
+      if (c) {
+        ctx.fillStyle = c;
+        ctx.fillRect(x, y, 1, 1);
+      }
+      x++;
+    }
+  }
+}
+draw('~2.3[>1.4[>^1A1D3[>2A3D>1.4A>', '#ff0000');
+</script>
+</body>
+</html>

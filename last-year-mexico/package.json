@@ -1,0 +1,14 @@
+{
+  "name": "platanus-hack-26-arcade",
+  "version": "1.0.0",
+  "description": "Phaser arcade game challenge starter kit",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 3001",
+    "check-restrictions": "arcade-check-restrictions"
+  },
+  "devDependencies": {
+    "@platanus/arcade-dev-ui-26": "latest",
+    "vite": "^7.1.12"
+  }
+}
