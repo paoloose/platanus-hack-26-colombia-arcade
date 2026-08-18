@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Shell(npm:*)",
+      "Shell(npx arcade-check-restrictions 2 >& 1)",
+      "Shell(cd /home/paolo/Dev/platanus-hack-26-colombia-arcade && echo \"=== Total ===\" && wc -c game.js && echo \"\" && echo \"=== Per-section line counts ===\" && awk 'NR<=3 {print \"header: line \" NR} /^var MIDI_SONG_BARRANQUILLA/{s=NR} /^var MIDI_SONG_NUESTRA_CANCION/{print \"song2_start: line \" NR} /^\\* var MIDI_SONG =/{print \"song_var: line \" NR} /^\\/\\* === \\/MIDI/{print \"end_midi: line \" NR} /^const A =/{print \"consts: line \" NR}' game.js && echo \"\" && echo \"=== Song variable line lengths ===\" && for v in BARRANQUILLA FRUKO_Y_SUS_TESOS LOBA NUESTRA_CANCION; do len=$(grep -oP \"^var MIDI_SONG_${v} = \\\"[^\\\"]*\\\"\" game.js | head -1 | wc -c); echo \"MIDI_SONG_${v}: $len chars (incl quotes)\"; done)",
+      "Shell(sed:*)",
+      "Shell(node --check game.js)",
+      "Shell(grep:*)",
+      "Shell(cd /home/paolo/Dev/platanus-hack-26-colombia-arcade && node -e \" const ARROW_DATA = `4.2C>3.1C2F>2.1C3F>1.1C4F>1C5F>^1C2F1C2F>1.3C2F>3.1C2F>^^3.3C>`; const A = '!#\\$%&\\\\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_\\`abcdefghijklmnopqrstuvwxyz{}~'; const w = 12; const r = [], p = []; for (let i = 0; i < ARROW_DATA.length;) { if (!p.length) { if (ARROW_DATA[i] == '~') { r.push(Array(w).fill('.')); i++; continue; } if (ARROW_DATA[i] == '^') { if (r.length) r.push([...r.at(-1)]); i++; continue; } } if (ARROW_DATA[i] == '>' && p.length >= w / 2 && w % 2 == 0) { const h = p.slice(0, w / 2); r.push([...h, ...h.toReversed()]); p.length = 0; i++; continue; } const n = +ARROW_DATA[i], c = ARROW_DATA[i + 1]; if (!n || n > 9) { i++; continue; } p.push(...Array(n).fill(c)); while (p.length >= w) r.push(p.splice(0, w)); i += 2; } if (p.length) r.push(p); console.log('rows:', r.length); for (const row of r) console.log(row.join('')); \")",
+      "Shell(node /tmp/arrow_check.js)",
+      "Shell(rm:*)"
+    ],
+    "deny": [],
+    "defaultMode": "default"
+  }
+}

@@ -1,0 +1,18 @@
+# Taste
+- Prefers pixelated, retro/NES-style aesthetics (e.g., Friday Night Funkin style). Confidence: 0.8
+- Prefers thick borders on UI elements for a chunky, pixelated look. Confidence: 0.85
+- Prefers top-mounted status/health bars. Confidence: 0.7
+- Prefers minimal text labels — favors visual indicators (colors, shapes) over text like P1/P2. Confidence: 0.7
+- Likes to be given options when a file violates a constraint, rather than having changes applied unilaterally (asks "Want me to...?" before editing). Confidence: 0.75
+- Performs thorough upfront investigation (reads file, checks git status/diff, checks package.json and metadata.json) before proposing changes. Confidence: 0.7
+- When proposing size/optimization fixes, includes specific byte counts and concrete tradeoffs (e.g., "removing even the smallest saves ~5.6KB"). Confidence: 0.7
+- Derives element colors from the existing palette rather than inventing arbitrary new hues. Confidence: 0.85
+- Border colors should be a darker variant of the element's fill color, never a lighter one. Confidence: 0.9
+- Prefers interface elements to default to a neutral/desaturated color and only adopt their distinct colored state on interaction (e.g., pressed/hovered). Confidence: 0.8
+- Aggressively removes dead code and entire unused systems rather than leaving them in the file. Confidence: 0.8
+- User explicitly wants to take over running validation checks themselves (`node --check`, `arcade-check-restrictions`), so the assistant should NOT run these checks after making changes. Confidence: 0.85
+- Diagnoses root causes and explains with domain analogies (e.g., comparing to real arcade machine attract modes) rather than purely technical answers. Confidence: 0.7
+- Expects the entire game loop — not just audio — to pause when the window loses focus (covers both tab visibility and moving the mouse to another screen, not just `visibilitychange`). Confidence: 0.9
+- Drives any timing that must stay in sync with audio from the AudioContext clock (`ctx.currentTime`) as the single source of truth, never from an rAF delta accumulator. Confidence: 0.9
+- Wants game state and audio to freeze/resume together when unfocused so arrows and song events never drift out of time. Confidence: 0.85
+- Wants sound effects / audio feedback for player events in games, using game-like cues (e.g., a damage-like buzz) rather than silent state changes. Confidence: 0.75
