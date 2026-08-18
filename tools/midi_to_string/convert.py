@@ -332,7 +332,7 @@ def encode(
                 if common_velocity:
                     stream.append(ALPHABET[min(15, max(1, round(group[0].velocity * 15 / 127)))])
                 else:
-                    stream.extend(ALPHABET[min(15, max(1, round(note.velocity * 15 / 127)))])
+                    stream.extend(ALPHABET[min(15, max(1, round(note.velocity * 15 / 127)))] for note in group)
                 if common_duration:
                     stream.append(ALPHABET[common_duration_index] if common_duration_index is not None else variable(max(1, group[0].end - group[0].tick)))
                 else:
