@@ -78,50 +78,21 @@ const CABINET_KEYS = {
   START1: ['Enter'], START2: ['2'],
 };
 
-const KEY_TO_ARCADE = {};
-for (const k in CABINET_KEYS) for (const kk of CABINET_KEYS[k]) KEY_TO_ARCADE[kk.length === 1 ? kk.toLowerCase() : kk] = k;
-
-function getArcadeCode(e) {
-  if (!e) return null;
-  const k = e.key ? (e.key.length === 1 ? e.key.toLowerCase() : e.key) : '';
-  if (KEY_TO_ARCADE[k]) return KEY_TO_ARCADE[k];
-  if (e.code) {
-    if (KEY_TO_ARCADE[e.code]) return KEY_TO_ARCADE[e.code];
-    if (e.code.startsWith('Key')) {
-      const ch = e.code.slice(3).toLowerCase();
-      if (KEY_TO_ARCADE[ch]) return KEY_TO_ARCADE[ch];
-    }
-    if (e.code.startsWith('Digit')) {
-      const ch = e.code.slice(5);
-      if (KEY_TO_ARCADE[ch]) return KEY_TO_ARCADE[ch];
-    }
-    if (e.code.startsWith('Numpad')) {
-      const ch = e.code.slice(6);
-      if (KEY_TO_ARCADE[ch]) return KEY_TO_ARCADE[ch];
-      if (ch === 'Enter' && KEY_TO_ARCADE['Enter']) return KEY_TO_ARCADE['Enter'];
-    }
-  }
-  return null;
+function phaserKey(k) {
+  const map = { ArrowUp: 'UP', ArrowDown: 'DOWN', ArrowLeft: 'LEFT', ArrowRight: 'RIGHT', Enter: 'ENTER' };
+  return map[k] || (k >= '0' && k <= '9' ? ['ZERO','ONE','TWO','THREE','FOUR','FIVE','SIX','SEVEN','EIGHT','NINE'][+k] : k.toUpperCase());
 }
 
-const held = Object.create(null);
-const justPressed = Object.create(null);
-const justReleased = Object.create(null);
+let arcadeKeys = {};
+const held = {};
+const justPressed = {};
+const justReleased = {};
 
 function clearInputs() {
   for (const k in held) held[k] = 0;
   for (const k in justPressed) justPressed[k] = 0;
   for (const k in justReleased) justReleased[k] = 0;
 }
-
-window.addEventListener('keydown', e => {
-  const c = getArcadeCode(e);
-  if (c) { if (!held[c]) justPressed[c] = 1; held[c] = 1; e.preventDefault(); }
-});
-window.addEventListener('keyup', e => {
-  const c = getArcadeCode(e);
-  if (c) { held[c] = 0; justReleased[c] = 1; }
-});
 
 const rand = () => Math.random();
 const t = (s, c, b) => ({ fontFamily: 'monospace', fontSize: s + 'px', color: c, fontStyle: b ? 'bold' : 'normal' });
@@ -330,6 +301,12 @@ function create() {
   G.titleLayer = s.add.container(0, 0).setDepth(200);
   G.winLayer = s.add.container(0, 0).setDepth(200);
   G.splashLayer = s.add.container(0, 0).setDepth(300);
+
+  // Setup Phaser input bindings
+  s.input.keyboard.disableGlobalCapture();
+  for (const k in CABINET_KEYS) {
+    arcadeKeys[k] = CABINET_KEYS[k].map(c => s.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes[phaserKey(c)]));
+  }
 
   drawBackground(s);
   drawStage(s);
@@ -896,6 +873,13 @@ function update(time, delta) {
   if (delta > 500) delta = 0;
   state.t += delta;
 
+  for (const k in arcadeKeys) {
+    const down = arcadeKeys[k].some(x => x.isDown);
+    justPressed[k] = down && !held[k];
+    justReleased[k] = !down && held[k];
+    held[k] = down;
+  }
+
   const s = G.titleLayer.scene;
   
   if (state.v === STATE.SPLASH) {
@@ -1092,8 +1076,6 @@ function update(time, delta) {
   animateCharacters(delta);
   updateCamera();
 
-  for (const k in justPressed) justPressed[k] = 0;
-  for (const k in justReleased) justReleased[k] = 0;
 }
 
 function drawDynamicElements() {
