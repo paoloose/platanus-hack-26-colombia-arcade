@@ -261,7 +261,7 @@ class Frame {
 
 // Editor state
 class EditorState {
-  constructor(width = 320, height = 240) {
+  constructor(width = 24, height = 24) {
     this.width = width;
     this.height = height;
     this.frames = [new Frame()]; // Array of frames
@@ -270,9 +270,9 @@ class EditorState {
     this.selectedColorIndex = 0;
     this.toolSize = 1; // Per-tab tool size
     this.toolOpacity = 100; // Per-tab tool opacity
-    this.zoom = 4; // Default zoom level
-    this.scrollX = 0; // Scroll position X
-    this.scrollY = 0; // Scroll position Y
+    this.zoom = 20; // Default zoom level: 20x
+    this.scrollX = undefined; // Scroll position X
+    this.scrollY = undefined; // Scroll position Y
     this.bgColor = '#1a1a1a'; // Canvas background color
     // Legacy support - keep for backward compatibility (deprecated, use frame history)
     this.history = []; // Deprecated - use frame history
@@ -395,9 +395,9 @@ class EditorState {
       selectedColorIndex: this.selectedColorIndex,
       toolSize: this.toolSize ?? 1,
       toolOpacity: this.toolOpacity ?? 100,
-      zoom: this.zoom ?? 4,
-      scrollX: this.scrollX ?? 0,
-      scrollY: this.scrollY ?? 0,
+      zoom: this.zoom ?? 20,
+      scrollX: this.scrollX,
+      scrollY: this.scrollY,
       bgColor: this.bgColor ?? '#1a1a1a',
       // Legacy support
       pixels: Array.from(this.getCurrentFrame().pixels.entries())
@@ -422,9 +422,9 @@ class EditorState {
     state.selectedColorIndex = json.selectedColorIndex ?? 0;
     state.toolSize = json.toolSize ?? 1;
     state.toolOpacity = json.toolOpacity ?? 100;
-    state.zoom = json.zoom ?? 4;
-    state.scrollX = json.scrollX ?? 0;
-    state.scrollY = json.scrollY ?? 0;
+    state.zoom = json.zoom ?? 20;
+    state.scrollX = json.scrollX;
+    state.scrollY = json.scrollY;
     state.bgColor = json.bgColor ?? '#1a1a1a';
 
     return state;
@@ -439,7 +439,7 @@ class TabManager {
     this.guidanceImages = new Map(); // tabId -> images array (in memory)
   }
 
-  async createTab(name = null, width = 320, height = 240) {
+  async createTab(name = null, width = 24, height = 24) {
     const tabId = `tab_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     const tab = {
       id: tabId,
@@ -448,6 +448,7 @@ class TabManager {
     };
     this.tabs.push(tab);
     this.guidanceImages.set(tabId, []);
+    this.activeTabIndex = this.tabs.length - 1;
     await this.saveTabs();
     return tab;
   }
@@ -1181,17 +1182,13 @@ class PixelArtEditor {
           container.scrollLeft = state.scrollX;
           container.scrollTop = state.scrollY;
         } else {
-          // Center scroll initially (only if not already scrolled)
-          const wasScrolled = container.dataset.wasScrolled === 'true';
-          if (!wasScrolled) {
-            const centerX = (wrapperWidth - container.clientWidth) / 2;
-            const centerY = (wrapperHeight - container.clientHeight) / 2;
-            container.scrollLeft = centerX;
-            container.scrollTop = centerY;
-            state.scrollX = centerX;
-            state.scrollY = centerY;
-            container.dataset.wasScrolled = 'true';
-          }
+          // Center scroll initially
+          const centerX = (wrapperWidth - container.clientWidth) / 2;
+          const centerY = (wrapperHeight - container.clientHeight) / 2;
+          container.scrollLeft = centerX;
+          container.scrollTop = centerY;
+          state.scrollX = centerX;
+          state.scrollY = centerY;
         }
       }
     }
@@ -1199,6 +1196,24 @@ class PixelArtEditor {
     this.draw();
     // Update guidance layer position
     setTimeout(() => this.drawGuidanceImages(), 0);
+  }
+
+  centerCanvas() {
+    const container = document.querySelector('.canvas-container');
+    const wrapper = document.querySelector('.canvas-wrapper');
+    if (container && wrapper) {
+      const wrapperWidth = parseFloat(wrapper.style.width) || window.innerWidth * 2;
+      const wrapperHeight = parseFloat(wrapper.style.height) || window.innerHeight * 2;
+      const centerX = (wrapperWidth - container.clientWidth) / 2;
+      const centerY = (wrapperHeight - container.clientHeight) / 2;
+      container.scrollLeft = centerX;
+      container.scrollTop = centerY;
+      const state = this.getActiveState();
+      if (state) {
+        state.scrollX = centerX;
+        state.scrollY = centerY;
+      }
+    }
   }
 
   getActiveState() {
@@ -1235,6 +1250,8 @@ class PixelArtEditor {
         if (state.scrollX !== undefined && state.scrollY !== undefined) {
           container.scrollLeft = state.scrollX;
           container.scrollTop = state.scrollY;
+        } else {
+          this.centerCanvas();
         }
       }, 10);
     }
@@ -1599,6 +1616,11 @@ class PixelArtEditor {
       btn.addEventListener('click', async (e) => {
         e.stopPropagation();
         const index = parseInt(btn.dataset.tabIndex);
+        const tab = this.tabManager.tabs[index];
+        const tabName = tab ? ` "${tab.name}"` : '';
+        if (!confirm(`Are you sure you want to close tab${tabName}?`)) {
+          return;
+        }
         if (await this.tabManager.deleteTab(index)) {
           this.render();
           this.setupEventListeners();
@@ -1609,9 +1631,8 @@ class PixelArtEditor {
 
     document.getElementById('add-tab').addEventListener('click', async () => {
       await this.tabManager.createTab();
-      this.render();
-      this.setupEventListeners();
-      this.updateCanvasSize();
+      this.switchToTab(this.tabManager.tabs.length - 1);
+      setTimeout(() => this.centerCanvas(), 20);
     });
 
     const duplicateTabBtn = document.getElementById('duplicate-tab');
@@ -1619,12 +1640,7 @@ class PixelArtEditor {
       duplicateTabBtn.addEventListener('click', async () => {
         const duplicated = await this.tabManager.duplicateTab(this.tabManager.activeTabIndex);
         if (duplicated) {
-          this.render();
-          this.setupEventListeners();
-          this.updateCanvasSize();
-          this.renderTimeline();
-          this.draw();
-          this.drawGuidanceImages();
+          this.switchToTab(this.tabManager.activeTabIndex);
         }
       });
     }
@@ -2454,7 +2470,7 @@ class PixelArtEditor {
 
     document.getElementById('zoom-reset').addEventListener('click', () => {
       const centerPixel = this.getPixelAtScreenPosition();
-      this.pixelSize = 4;
+      this.pixelSize = 20;
       this.updateZoomUI(true);
       if (centerPixel) this.scrollToPixel(centerPixel.x, centerPixel.y);
       this.saveScrollPosition();
@@ -2744,7 +2760,7 @@ class PixelArtEditor {
           if (centerPixel) this.scrollToPixel(centerPixel.x, centerPixel.y);
           this.saveScrollPosition();
         } else if (e.key === '0' || e.key === 'Numpad0') {
-          this.pixelSize = 4;
+          this.pixelSize = 20;
           document.getElementById('zoom-slider').value = this.pixelSize;
           document.getElementById('zoom-value').textContent = this.pixelSize + 'x';
           this.updateCanvasSize(true);
@@ -3719,15 +3735,10 @@ class PixelArtEditor {
             const pixels = imgData.data;
 
             // Clear canvas and resize if needed
-            if (targetWidth !== state.width || targetHeight !== state.height) {
-              state.width = targetWidth;
-              state.height = targetHeight;
-              state.pixels = new Map();
-              state.undoStack = [];
-              this.updateCanvasSize(true);
-            } else {
-              state.pixels.clear();
-            }
+            state.width = targetWidth;
+            state.height = targetHeight;
+            state.getCurrentFrame().pixels.clear();
+            this.updateCanvasSize(true);
 
             // Convert to palette colors
             const palette = this.palette;
@@ -3742,24 +3753,26 @@ class PixelArtEditor {
                 if (a < 128) continue; // Skip transparent pixels
 
                 // Find closest palette color
-                let closestColor = palette[0];
+                let closestIndex = 0;
                 let minDist = Infinity;
-                for (const color of palette) {
+                for (let cIdx = 0; cIdx < palette.length; cIdx++) {
+                  const color = palette[cIdx];
                   const pr = parseInt(color.slice(1, 3), 16);
                   const pg = parseInt(color.slice(3, 5), 16);
                   const pb = parseInt(color.slice(5, 7), 16);
                   const dist = (r - pr) ** 2 + (g - pg) ** 2 + (b - pb) ** 2;
                   if (dist < minDist) {
                     minDist = dist;
-                    closestColor = color;
+                    closestIndex = cIdx;
                   }
                 }
 
-                state.pixels.set(`${x},${y}`, closestColor);
+                state.setPixel(x, y, closestIndex);
               }
             }
 
-            this.drawCanvas();
+            this.draw();
+            this.updateTimelineThumbnail();
             this.tabManager.saveTabs();
             this.updateZoomUI();
           };
@@ -4017,53 +4030,60 @@ class PixelArtEditor {
   //   ^ = repeat previous row
   //   > = horizontal symmetry marker (mirrors left half to right half, only for even widths)
   parseCSEF(s, w) {
+    if (!s || !w) return [];
+    s = s.trim();
     const r = [], p = [];
     for (let i = 0; i < s.length;) {
       if (!p.length) {
         // Row boundary semantic codes
         if (s[i] === '~') { r.push(Array(w).fill('.')); i++; continue; }
-        if (s[i] === '^') { if (r.length) r.push([...r.at(-1)]); i++; continue; }
+        if (s[i] === '^') {
+          if (r.length) r.push([...r[r.length - 1]]);
+          else r.push(Array(w).fill('.'));
+          i++;
+          continue;
+        }
       }
       
       // Check for symmetry marker ">" (must be in middle of row, after at least half width)
       if (s[i] === '>') {
-        // Validate: must have at least half the row decoded, and width must be even
-        if (p.length < w / 2 || w % 2 !== 0) {
-          // Invalid position - skip and continue
-          i++;
-          continue;
+        if (p.length >= Math.floor(w / 2) && w % 2 === 0) {
+          const half = p.slice(0, w / 2);
+          const mirrored = [...half].reverse();
+          p.length = 0;
+          r.push([...half, ...mirrored]);
         }
-        
-        // Mirror the left half to complete the row
-        const leftHalf = p.slice(0, w / 2);
-        const rightHalf = [...leftHalf].reverse(); // Mirror
-        p.length = 0; // Clear partial row
-        p.push(...leftHalf, ...rightHalf);
-        
-        // Complete row is ready
-        r.push(p.splice(0, w));
+        i++;
+        continue;
+      }
+
+      // Skip unexpected whitespace/newlines
+      if (s[i] === '\r' || s[i] === '\n' || s[i] === ' ' || s[i] === '\t') {
         i++;
         continue;
       }
       
       // Regular RLE encoding: <digit><char>
       const n = +s[i], c = s[i + 1];
-      if (!n || n > 9) { i++; continue; }
+      if (!n || n > 9 || c === undefined) { i++; continue; }
       p.push(...Array(n).fill(c));
       
-      // Check if row is complete (but not if we just processed a symmetry marker)
+      // Check if row is complete
       while (p.length >= w) {
         r.push(p.splice(0, w));
       }
       i += 2;
     }
-    if (p.length) r.push(p);
+    if (p.length) {
+      while (p.length < w) p.push('.');
+      r.push(p.splice(0, w));
+    }
     return r;
   }
 
   // Import sprite from CSEF code
   async importSprite() {
-    const input = document.getElementById('import-code').value.trim();
+    let input = document.getElementById('import-code').value.trim();
     if (!input) {
       alert('Please paste CSEF code');
       return;
@@ -4072,31 +4092,58 @@ class PixelArtEditor {
     const state = this.getActiveState();
     state.saveState(true);
 
-    let width, encoded;
+    let width = null, encoded = null;
 
-    // Try to parse full format: "width: 30, encoded: '...'"
-    const fullFormatMatch = input.match(/width:\s*(\d+),\s*encoded:\s*['"]([^'"]+)['"]/);
-    if (fullFormatMatch) {
-      width = parseInt(fullFormatMatch[1]);
-      encoded = fullFormatMatch[2];
-    } else {
-      // Try to parse just the encoded string (assume it's wrapped in quotes)
-      const quotedMatch = input.match(/['"]([^'"]+)['"]/);
-      if (quotedMatch) {
-        encoded = quotedMatch[1];
-      } else {
-        // Assume the entire input is the encoded string
-        encoded = input;
+    // 1. Check for parseCSEF('...', 12) or parseCSEF("...", 12)
+    const parseCsefMatch = input.match(/parseCSEF\s*\(\s*['"`]([^'"`]+)['"`]\s*(?:,\s*(\d+))?\s*\)/);
+    if (parseCsefMatch) {
+      encoded = parseCsefMatch[1];
+      if (parseCsefMatch[2]) width = parseInt(parseCsefMatch[2]);
+    }
+
+    // 2. Check for sp('...', 24) or sp('...')
+    if (!encoded) {
+      const spMatch = input.match(/\bsp\s*\(\s*['"`]([^'"`]+)['"`]\s*(?:,\s*(\d+))?\s*\)/);
+      if (spMatch) {
+        encoded = spMatch[1];
+        width = spMatch[2] ? parseInt(spMatch[2]) : 24;
       }
+    }
 
-      // Try to detect width from the encoded string or use default
-      width = 30;
+    // 3. Check for encoded: '...' or "..." or `...`
+    if (!encoded) {
+      const encodedPropMatch = input.match(/encoded\s*:\s*['"`]([^'"`]+)['"`]/i);
+      if (encodedPropMatch) {
+        encoded = encodedPropMatch[1];
+      }
+    }
 
-      // Try to extract width from comments if present
-      const widthMatch = input.match(/width[:\s]+(\d+)/i);
+    // 4. If width not found yet, check for width: 12 or width = 12 or Width: 12px or w: 12
+    if (!width) {
+      const widthMatch = input.match(/(?:width|w)\s*[:=]\s*(\d+)/i) || input.match(/width:\s*(\d+)px/i);
       if (widthMatch) {
         width = parseInt(widthMatch[1]);
       }
+    }
+
+    // 5. If still no encoded string, check for any quoted string
+    if (!encoded) {
+      const quotedMatch = input.match(/['"`]([^'"`]{2,})['"`]/);
+      if (quotedMatch) {
+        encoded = quotedMatch[1];
+      } else {
+        // Assume the entire input is the encoded string (after stripping any comment lines)
+        const lines = input.split('\n')
+          .map(l => l.trim())
+          .filter(l => l && !l.startsWith('//') && !l.startsWith('/*') && !l.startsWith('*'));
+        encoded = lines.join('').replace(/;\s*$/, '');
+      }
+    }
+
+    // 6. If width still not determined:
+    if (!width) {
+      const uiTargetWidth = parseInt(document.getElementById('import-target-width')?.value);
+      width = uiTargetWidth || state.width || 24;
     }
 
     if (!encoded) {
@@ -4114,54 +4161,44 @@ class PixelArtEditor {
 
     const height = spriteData.length;
 
-    // Get target dimensions from inputs
-    const targetWidth = parseInt(document.getElementById('import-target-width').value) || state.width;
-    const targetHeight = parseInt(document.getElementById('import-target-height').value) || state.height;
+    // Set tab state dimensions to match imported sprite
+    state.width = width;
+    state.height = height;
 
-    // Resize canvas to target dimensions if different
-    if (targetWidth !== state.width || targetHeight !== state.height) {
-      state.width = targetWidth;
-      state.height = targetHeight;
-      state.pixels = new Map();
-      state.undoStack = [];
-      this.updateCanvasSize(true);
-    } else {
-      state.pixels.clear();
-    }
+    // Clear current frame pixels
+    state.getCurrentFrame().pixels.clear();
 
-    // Calculate scale to fit sprite within target dimensions
-    const scale = Math.min(targetWidth / width, targetHeight / height);
-    const scaledWidth = Math.floor(width * scale);
-    const scaledHeight = Math.floor(height * scale);
+    // Update UI input values
+    const canvasWidthInput = document.getElementById('canvas-width');
+    const canvasHeightInput = document.getElementById('canvas-height');
+    const importTargetWidthInput = document.getElementById('import-target-width');
+    const importTargetHeightInput = document.getElementById('import-target-height');
+    const importImageWidthInput = document.getElementById('import-image-width');
+    const importImageHeightInput = document.getElementById('import-image-height');
+    const pasteTargetWidthInput = document.getElementById('paste-target-width');
+    const pasteTargetHeightInput = document.getElementById('paste-target-height');
 
-    // Center the scaled sprite on the canvas
-    const startX = Math.floor((targetWidth - scaledWidth) / 2);
-    const startY = Math.floor((targetHeight - scaledHeight) / 2);
+    if (canvasWidthInput) canvasWidthInput.value = width;
+    if (canvasHeightInput) canvasHeightInput.value = height;
+    if (importTargetWidthInput) importTargetWidthInput.value = width;
+    if (importTargetHeightInput) importTargetHeightInput.value = height;
+    if (importImageWidthInput) importImageWidthInput.value = width;
+    if (importImageHeightInput) importImageHeightInput.value = height;
+    if (pasteTargetWidthInput) pasteTargetWidthInput.value = width;
+    if (pasteTargetHeightInput) pasteTargetHeightInput.value = height;
 
-    // Convert sprite data to pixels and paste (with scaling)
-    for (let row = 0; row < scaledHeight; row++) {
-      for (let col = 0; col < scaledWidth; col++) {
-        // Map scaled position back to original sprite
-        const srcCol = Math.floor((col / scaledWidth) * width);
-        const srcRow = Math.floor((row / scaledHeight) * height);
-        const char = spriteData[srcRow] ? spriteData[srcRow][srcCol] : null;
-        
-        const x = startX + col;
-        const y = startY + row;
+    this.updateCanvasSize(true);
 
-        if (x >= 0 && x < targetWidth && y >= 0 && y < targetHeight) {
-          // Map character to color index
-          if (char === '.' || char === ' ' || !char) {
-            state.setPixel(x, y, null); // Empty pixel
-          } else {
-            // Find color index from color code
-            const colorIndex = this.colorCodes.indexOf(char);
-            if (colorIndex >= 0) {
-              state.setPixel(x, y, colorIndex);
-            } else {
-              // Unknown character - set as empty
-              state.setPixel(x, y, null);
-            }
+    // Populate pixels 1:1 without distortion
+    for (let y = 0; y < height; y++) {
+      const row = spriteData[y];
+      if (!row) continue;
+      for (let x = 0; x < width; x++) {
+        const char = row[x];
+        if (char && char !== '.' && char !== ' ') {
+          const colorIndex = this.colorCodes.indexOf(char);
+          if (colorIndex >= 0) {
+            state.setPixel(x, y, colorIndex);
           }
         }
       }

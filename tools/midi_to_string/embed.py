@@ -28,10 +28,10 @@ OLD_LINE = re.compile(r'var MIDI_SONG = "[^"]+";\n')
 SONG_LIST = [
     # (filename, start_second, end_second)
     # use None for end_second to go until the end
-    ("barranquilla.mid", 0.0, 120.0),
-    ("fruko_y_sus_tesos.mid", 0.0, 120.0),
-    ("loba.mid", 0.0, 120.0),
-    ("nuestra_cancion.mid", 0.0, 120.0),
+    ("barranquilla.mid", 0.0, 60.0),
+    ("fruko_y_sus_tesos.mid", 0.0, 60.0),
+    ("loba.mid", 0.0, 60.0),
+    ("nuestra_cancion.mid", 0.0, 60.0),
 ]
 
 
