@@ -960,13 +960,8 @@ class PixelArtEditor {
               Generates a C-style palette array from the current palette
             </p>
             <button id="export-palette">Generate Palette</button>
-            <div style="display: flex; gap: 4px; margin-top: 8px;">
-              <button id="palette-tab-bytecode" class="palette-tab active" style="flex: 1; margin: 0;">Bytecode</button>
-              <button id="palette-tab-lang" class="palette-tab" style="flex: 1; margin: 0; background: #444;">Language</button>
-            </div>
-            <textarea id="palette-output-bytecode" readonly rows="10"></textarea>
-            <textarea id="palette-output-lang" readonly rows="10" style="display: none;"></textarea>
             <button id="copy-palette" style="background: #666;">Copy Palette</button>
+            <textarea id="palette-output" readonly rows="10"></textarea>
           </div>
           <div class="sidebar-section">
             <h3>App State</h3>

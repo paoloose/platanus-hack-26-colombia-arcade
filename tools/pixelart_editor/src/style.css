@@ -351,7 +351,8 @@ button:active {
   background: #3a8eef;
 }
 
-#export-output {
+#export-output,
+#palette-output {
   width: 100%;
   margin-top: 8px;
   padding: 8px;
