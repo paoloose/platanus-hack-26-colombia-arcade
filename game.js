@@ -101,7 +101,7 @@ const cRct = (s, x, y, w, h, color, alpha) => s.add.rectangle(x, y, w, h, color,
 
 /* === COLORS === */
 // Color palette constants for background, stage, HUD, receptors, and feedback effects
-const COL = {
+const C = {
   hudBg: 0x110008, hudBd: 0xffd166, // HUD panel background and border colors
   sel: 0xfff200, selDim: 0xa89000, // Selection menu active & dim highlight colors
   arrowL: 0xd3cde7, arrowD: 0x6a6486, // Default resting arrow colors (light fill / dark border)
@@ -121,15 +121,15 @@ const COL = {
 
 /* === SPRITE ENGINE (CSEF) === */
 const P_PAL = [
-  0x000, 0x24222a, 0x4e4b5b, 0, 0xaba4c1, 0xd3cde7, 0xfefdfe, 0,
-  0xf7bb1b, 0x9f5611, 0, 0, 0x5e2e00, 0x915f01, 0, 0,
-  0, 0, 0, 0, 0x362400, 0, 0, 0x206100,
-  0x7ec43f, 0, 0, 0, 0xff6600, 0, 0, 0,
+  0x000000, 0x24222a, 0x4e4b5b, 0, 0xaba4c1, 0xd3cde7, 0xfefdfe, 0,
+  0xf7bb1b, 0x9f5611, 0, 0x390800, 0x5e2e00, 0x915f01, 0, 0,
+  0, 0, 0, 0x5b4d00, 0x362400, 0, 0, 0x206100,
+  0x7ec43f, 0, 0, 0, 0xff6600, 0, 0, 0x004d3d,
   0, 0, 0, 0, 0, 0, 0, 0,
   0x08b8ea, 0, 0, 0x333d8d, 0, 0, 0, 0,
-  0, 0x0017c5, 0, 0, 0, 0, 0, 0,
+  0, 0x002e83, 0, 0, 0, 0, 0, 0,
   0, 0xf6629d, 0, 0, 0, 0, 0, 0,
-  0, 0xd11717, 0xa41c1c, 0xab8169, 0, 0, 0, 0xdeac92,
+  0, 0xd11717, 0xa41c1c, 0xab8169, 0x7c6822, 0xc1b087, 0, 0xdeac92,
   0, 0xf7bb1b, 0xBF921F
 ];
 
@@ -163,14 +163,12 @@ function parseCSEF(s, w) {
 function sp(sData, w = 24) { return sData ? (Array.isArray(sData) ? sData : parseCSEF(sData, w)) : []; }
 
 function dsp(gfx, sData, x, y, shadow = false) {
-  if (!sData || !sData.length) return;
   const h = sData.length, w = sData[0]?.length || 0;
-  if (!w) return;
   const cx = w >> 1, cy = h >> 1;
   if (shadow) {
     for (let r = 0; r < h; r++) for (let c = 0; c < sData[r].length; c++) {
       if (CLR[sData[r][c]] != null) {
-        gfx.fillStyle(0x000, .35);
+        gfx.fillStyle(0x000, .4);
         gfx.fillRect(x - cx + c + 0.3, y - cy + r + 0.3, 1, 1);
       }
     }
@@ -219,6 +217,12 @@ const DANCERS = [
     sp('~~~5.3r9.3r4.4.5r7o5r3.^4.5r3&1o3&5r3.4.5r1&2B1Y2B1&5r3.^5.4r3&1Y3&4r4.9.1o2<1Y2<1o8.9.1o2N1Y2N1o8.6.3G1c2o1Y2o1c3G5.5.4G2c1r1Y1r2c4G4.4.3G2.2c1G1r1G2c2.3G3.4.2G3.2c1G1r1G2c3.2G3.4.2{3.2c1G1r1G2c3.2{3.4.2{2.2<1c1G1r1G1c2<2.2{3.6.1<1c4<1G2<1c3<1c4.6.3<1c1<1c1<1c3<1c2<4.6.1c2<8.1<1c5.6.2<1c8.1c1<5.7.2Y8.2Y5.6.3Y8.3Y4.', 24),
     sp('6.3r1.7o2r5.5.5r1o3&1o3&2r4.5.5r1o1&2B1Y2B1&2r4.^5.5r1o3&1Y3&2r4.5.5r4o1Y2o3r4.6.4r1o3<1Y1<1o2r5.9.1.1o3N1Y1N1o7.9.2.3o1Y1o8.8.2G2c2r1Y1c1G7.7.3G2c3r1c1G7.7.2G1.2c1G1r1G1c1G7.^7.2G1.2c1G1r1G1c2G6.7.3G1{1c1G1r1G1c2G1{5.8.1G2{1<3G1<1.2{5.9.1.1<1c1<1c2<8.6.1Y1c1<1.5<1c8.6.1Y3<1c1<1c1<1c1<8.6.2Y1c2<1c1<1.3<7.6.1Y2.1<1c2<2.1c1<7.9.6.1<1c7.9.6.2Y7.9.6.3Y6.', 24),
   ]],
+  ['Rolo con ruana', [
+    sp('9.1.2A>9.1A2U>^7.5A>7.5U>9.2U1{1A1{1A9.9.1U5{9.9.1.2{2G1{9.9.2.1{>9.1}1f3N1f2}7.8.2}2f1N2f2}1T6.7.2T2}1f1N1f2}2T6.7.2T2}1f1N1f1}1T1M1;6.6.2;2T1}2f3M2;6.6.3;1T2}1f2{2;7.5.2{1;1.2T1}1f2{1;8.4.1[2{2.2T1}1f2}1T8.3.1[1x1<3.2T1}1f2}1T8.3.1[1x1<3.2T1}2B1}1T8.4.1x4.2T1B2C1B1T8.9.1.1B1C1B2C9.9.1.3C1B2C8.9.1.3C1.2C8.9.1.2L3.3L6.', 24),
+    sp('~9.1.2A>9.1A2U>3.2<4.1A4U1A9.2.2x2<1.9A1A7.1.3[2{1.9U1U7.4.1{1;3.2U1{1A1{1A9.5.2;2.1U5{9.5.2;3.2{2G1{9.6.3;1}1f2{1N1f2}7.7.1;1}2f2N2f2}1T1.2;2{1.7.2T1f2N2f2}1T4;2{1.7.1}1T4f2}2T2;5.6.2}1T3f3}1T8.5.2}1T3f3}2C8.4.3}1T1f2T1}1T4C4.1L2.5.1}2T1f1T9C1.2L2.6.1T2f1T5C1B1.3C2L2.7.1f2T3C2B1C2.2C2L2.9.2T2.3C8.9.5.2C8.^9.5.2L8.9.5.4L6.', 24),
+    sp('9.1.2A>9.1A2U>^7.5A>7.5U>9.2U1{1A1{1A9.9.1U5{9.9.1.2{2G1{9.9.2.1{>9.1}1f3N1f2}7.8.2}2f1N2f2}1T6.7.2T2}1f1N1f2}2T6.7.2T2}1f1N1f1}1T1M1;6.6.2;2T1}2f3M2;6.6.3;1T2}1f2{2;7.5.2{1;1.2T1}1f2{1;8.4.1[2{2.2T1}1f2}1T8.3.1[1x1<3.2T1}1f2}1T8.3.1[1x1<3.2T1}2B1}1T8.4.1x4.2T1B2C1B1T8.9.1.1B1C1B2C9.9.1.3C1B2C8.9.1.3C1.2C8.9.1.2L3.3L6.', 24),
+    sp('9.1.2A>9.1A2U>^7.5A>7.5U>9.2U1{1A1{1A9.9.1U5{9.9.1.2{2G1{9.9.2.1{>9.1}1f3N1f2}7.8.2}2f1N2f2}1T6.7.2T2}1f1N1f2}2T6.7.2T2}1f1N1f1}1T1M1;6.6.2;2T1}2f3M2;6.6.3;1T2}1f2{2;7.5.2{1;1.2T1}1f2{1;8.4.1[2{2.2T1}1f2}1T8.3.1[1x1<3.2T1}1f2}1T8.3.1[1x1<3.2T1}2B1}1T8.4.1x4.2T1B2C1B1T8.9.1.1B1C1B2C9.9.1.3C1B2C8.9.1.3C1.2C8.9.1.2L3.3L6.', 24),
+  ]],
 ];
 
 const TITLE_SPRITE = sp('2.9B9B9B2.1.2B1A1B9A9A5A2B1.1.1B1A1<2A1<1A1<1A2<1A2x2A1x2A1x1A2[1A3[1A1B1.1.1B1A2<1A1<3A1<2A1x1A1x1A2x1A1x1A1[2A1[3A1B1.1.1B2A3<1A1<1A2<1A1x1A1x1A4x1A2[1A3[1A1B1.1.2B1A2<2A1<1A1<2A2x2A1x1A2x1A1[4A1[1A1B1.2.1B2A1<2A1<1A2<1A1x1A1x1A1x1A2x1A3[1A2[1A1B1.1.2B9A9A8A1B1.1.1B1A6G3A2E2A2E9A1A2B1.1.1B1A2G3A2G2A1E1A1E1A1E3A4G2A2G1A1B1.1.1B1A2G3A2G2A1E1A1E1A2E2A2G2A1G1A1G1A1G2B1.1B1A2G2A2G3A2E2A1E3A2G2A1G1A1G1A1G1A1B1.1B1A5G8A2E3A1G2A1G1A1G1A1G1A1B1.1B1A4G4A1G1A1G1A1G3A1G1A3G2A3G1A1B2B1A2G1A2G3A1G1A1G1A2G1A2G1A1G1A2G1A1G1A1G1A1B2B1A2G2A3G1A1G1A1G1A1G1A1G1A1G1A1G2A1G1A1G1A1G1A1B1B1A3G1A4B1A3G1A1G3A1G1A4G1A1G1A1G1A1B2B3A5B7A1B9A3A1B1.5B2.9B9B4B1.', 31);
@@ -228,21 +232,21 @@ const DIR = { L: 0, D: 1, U: 2, R: 3 }; // Direction lane indices (0: Left, 1: D
 
 // Base arrow sprite points UP; rotate to face each lane
 const DIR_ROT = [-Math.PI / 2, Math.PI, 0, Math.PI / 2]; // Rotation in radians for Left (-90°), Down (180°), Up (0°), Right (90°)
-const ARROW_LIGHT = [COL.pL, COL.pD, COL.pU, COL.pR]; // Highlight fill colors per direction lane
-const ARROW_DARK = [COL.pLD, COL.pDD, COL.pUD, COL.pRD]; // Highlight border colors per direction lane
+const ARROW_LIGHT = [C.pL, C.pD, C.pU, C.pR]; // Highlight fill colors per direction lane
+const ARROW_DARK = [C.pLD, C.pDD, C.pUD, C.pRD]; // Highlight border colors per direction lane
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
 const STATE = { SPLASH: -1, TITLE: 0, CHARSEL: 1, SONGSEL: 2, BATTLE: 3, WIN: 4 }; // Game flow states
 const state = { v: STATE.SPLASH, t: 0, countdownStart: 0, songDecoded: null, songStart: 0, songEnd: 0, winner: -1 };
 
 const players = [
-  { name: 'PLATANUS', sprites: DANCERS[0][1], center: { x: 157, y: 380 }, box: { x: 85, y: 255, w: 145, h: 220 },
+  { name: '', sprites: DANCERS[0][1], center: { x: 157, y: 380 }, box: { x: 85, y: 255, w: 145, h: 220 },
     combo: 0, score: 0, arrows: [], notes: [], keys: ['P1_L', 'P1_D', 'P1_U', 'P1_R'],
     dirKeys: [['P1_L', 'P1_4', 'P1_1'], ['P1_D', 'P1_5'], ['P1_U', 'P1_2'], ['P1_R', 'P1_6', 'P1_3']],
     arrowBounce: [0, 0, 0, 0],
     color: 0xff5577, perfect: 0, good: 0, miss: 0, seq: 0, gfx: null,
     poseIdx: 0, pulseDx: 0, pulseDy: 0, pulseT: 0 },
-  { name: 'LA PARKA', sprites: DANCERS[1][1], center: { x: 642, y: 400 }, box: { x: 570, y: 255, w: 145, h: 220 },
+  { name: '', sprites: DANCERS[1][1], center: { x: 642, y: 400 }, box: { x: 570, y: 255, w: 145, h: 220 },
     combo: 0, score: 0, arrows: [], notes: [], keys: ['P2_L', 'P2_D', 'P2_U', 'P2_R'],
     dirKeys: [['P2_L', 'P2_4', 'P2_1'], ['P2_D', 'P2_5'], ['P2_U', 'P2_2'], ['P2_R', 'P2_6', 'P2_3']],
     arrowBounce: [0, 0, 0, 0],
@@ -275,7 +279,7 @@ function updateStagePlayer(idx, fighterIdx, isInstant = 0) {
   G.charSel[idx].cursor = fighterIdx;
   const f = DANCERS[fighterIdx];
   const p = players[idx];
-  
+
   if (isInstant || !G.titleLayer?.scene) {
     p.name = f[0];
     p.sprites = f[1];
@@ -547,16 +551,16 @@ function drawTugGfx() {
   // Bar background
   g.fillStyle(0x0a0a14, 1); g.fillRect(bx, by, bw, bh);
   // Left half P1, right half P2
-  g.fillStyle(COL.p1H, 0.3); g.fillRect(bx, by, bw / 2, bh);
-  g.fillStyle(COL.p2H, 0.3); g.fillRect(bx + bw / 2, by, bw / 2, bh);
+  g.fillStyle(C.p1H, 0.3); g.fillRect(bx, by, bw / 2, bh);
+  g.fillStyle(C.p2H, 0.3); g.fillRect(bx + bw / 2, by, bw / 2, bh);
   // Center divider
   g.fillStyle(0xfff, 0.5); g.fillRect(bx + bw / 2 - 1, by - 4, 2, bh + 8);
   // Pixel marker
   const mx = Math.round(bx + ((G.barVis + BAR_MAX) / (2 * BAR_MAX)) * bw);
   const danger = Math.abs(G.barVis) > 80;
-  const mc = G.barVis >= 0 ? COL.p1H : COL.p2H;
+  const mc = G.barVis >= 0 ? C.p1H : C.p2H;
   g.fillStyle(0x000, 1); g.fillRect(mx - 8, by - 4, 16, bh + 8);
-  g.fillStyle(danger && (state.t >> 4 & 1) ? 0xff3333 : mc, 1); g.fillRect(mx - 6, by - 2, 12, bh + 4);
+  g.fillStyle(danger && (state.t >> 4 & 1) ? C.miss : mc, 1); g.fillRect(mx - 6, by - 2, 12, bh + 4);
   g.fillStyle(0xfff, 1); g.fillRect(mx - 4, by, 4, 3);
 }
 
@@ -564,7 +568,7 @@ function drawArrowGfx(s) {
   for (let pi = 0; pi < 2; pi++) {
     for (let i = 0; i < 4; i++) {
       const g = s.add.graphics();
-      drawArrow(g, LANE_X[pi][i], HIT_Y, ARROW_SCALE, DIR_ROT[i], COL.arrowL, COL.arrowD);
+      drawArrow(g, LANE_X[pi][i], HIT_Y, ARROW_SCALE, DIR_ROT[i], C.arrowL, C.arrowD);
       players[pi].arrows.push(g);
       G.hudLayer.add(g);
     }
@@ -676,8 +680,6 @@ function drawCharSelScreen(s) {
     const px = players[i].center.x;
     if (i === 0 && G.mode === '1p') {
       G.titleLayer.add(cTxt(s, px, 155, 'RIVAL (CPU)', 16, '#fff', 1));
-      let stateTxt = G.aiPicking ? 'ROULETTE' : (G.charSel[0].ok ? 'LISTO' : 'ESPERANDO...');
-      G.titleLayer.add(cTxt(s, px, 185, stateTxt, stateTxt === 'ESPERANDO...' ? 14 : 18, stateTxt === 'ESPERANDO...' ? '#666666' : '#fff', 1));
     } else {
       if (G.charSel[i].ok) G.titleLayer.add(cTxt(s, px, 185, 'LISTO', 20, '#fff', 1));
     }
@@ -741,12 +743,12 @@ function startBattle() {
   if (G.menuMusic) { G.menuMusic.stop(); G.menuMusic = null; }
   if (G.previewMusic) { G.previewMusic.stop(); G.previewMusic = null; }
   state.v = STATE.BATTLE;
-  
+
   if (G.bgGfx) G.bgGfx.setVisible(1);
   if (G.stageGfx) G.stageGfx.setVisible(1);
   if (G.floorGfx) G.floorGfx.setVisible(1);
   if (G.menuBgGraphics) G.menuBgGraphics.setVisible(0);
-  
+
   state.t = 0;
   state.winner = -1;
   state.songStart = 0;
@@ -881,7 +883,7 @@ function update(time, delta) {
   }
 
   const s = G.titleLayer.scene;
-  
+
   if (state.v === STATE.SPLASH) {
     if (state.t > 2000 && !G.splashFading) {
       G.splashFading = 1;
@@ -1048,7 +1050,7 @@ function update(time, delta) {
         const d = i - G.selSongVis, m = Math.abs(d);
         const sy = H/2 + d * 80, sx = 650 - m ** 1.5 * 20;
         const a = Math.max(0, 1 - m);
-        
+
         g.fillStyle(0x1A102A, 0.7 + a * 0.3);
         if (a > 0.01) g.lineStyle(3, 0xfff, a);
         g.fillRoundedRect(sx - 150 - a*10, sy - 27 - a*5, 300 + a*20, 55 + a*10, 12);
@@ -1262,8 +1264,8 @@ function updateBattle(delta) {
       if (g) {
         g.clear();
         drawArrow(g, xs[d], curY, curScale, DIR_ROT[d],
-          isHeld ? ARROW_LIGHT[d] : COL.arrowL,
-          isHeld ? ARROW_DARK[d] : COL.arrowD);
+          isHeld ? ARROW_LIGHT[d] : C.arrowL,
+          isHeld ? ARROW_DARK[d] : C.arrowD);
       }
       if (G.mode !== '1p' || pi === 1) {
         if (isPressed) tryHit(pi, d, songT);
@@ -1353,33 +1355,7 @@ function onMiss(pi, dir) {
   if (p.comboTxt) p.comboTxt.setText('');
   G.bar = clamp(G.bar + (pi === 0 ? -MISS_PEN : MISS_PEN), -BAR_MAX, BAR_MAX);
   showJudgment(G.titleLayer.scene, pi, dir ?? 1, 'FALLO');
-  playHurt();
-}
-
-// Damage sound: gritty descending buzz, like a fighter taking a hit
-function playHurt() {
-  const ctx = G.titleLayer?.scene?.sound?.context;
-  if (!ctx) return;
-  const t0 = ctx.currentTime;
-  const g = ctx.createGain(), f = ctx.createBiquadFilter();
-  f.type = 'lowpass';
-  f.frequency.setValueAtTime(1200, t0);
-  f.frequency.exponentialRampToValueAtTime(200, t0 + .18);
-  g.gain.setValueAtTime(.22, t0);
-  g.gain.exponentialRampToValueAtTime(.001, t0 + .2);
-  f.connect(g);
-  g.connect(ctx.destination);
-  const o1 = ctx.createOscillator(), o2 = ctx.createOscillator();
-  o1.type = 'sawtooth';
-  o2.type = 'square';
-  o1.frequency.setValueAtTime(220, t0);
-  o1.frequency.exponentialRampToValueAtTime(70, t0 + .18);
-  o2.frequency.setValueAtTime(110, t0);
-  o2.frequency.exponentialRampToValueAtTime(45, t0 + .18);
-  o2.detune.value = 15;
-  o1.connect(f); o2.connect(f);
-  o1.start(t0); o1.stop(t0 + .2);
-  o2.start(t0); o2.stop(t0 + .2);
+  playSynth(150, 40, [.15, .2], [.2, .001], [.2]);
 }
 
 function playSynth(f1, f2, dur, g2, g3) {
@@ -1448,7 +1424,7 @@ function variable(data, state) {
   let value = 0, digit;
   do {
     digit = A.indexOf(data[state.pos++]);
-    if (digit < 0) throw Error('invalid MIDI varint');
+    // if (digit < 0) throw Error('invalid MIDI varint');
     if (digit !== Z) value = value * Z + digit;
   } while (digit !== Z);
   return value;
@@ -1458,7 +1434,7 @@ function fixed(data, state, width) {
   let value = 0;
   for (let i = 0; i < width; i++) {
     const digit = A.indexOf(data[state.pos++]);
-    if (digit < 0) throw Error('invalid MIDI field');
+    // if (digit < 0) throw Error('invalid MIDI field');
     value = value * B + digit;
   }
   return value;
@@ -1466,7 +1442,7 @@ function fixed(data, state, width) {
 
 function decode(data) {
   const parts = data.split('|');
-  if (parts.length !== 4 || parts[0] !== 'M5') throw Error('invalid MIDI header');
+  // if (parts.length !== 4 || parts[0] !== 'M5') throw Error('invalid MIDI header');
   const division = fixed(parts[1], { pos: 0 }, 2), dictionary = [];
   const ds = { pos: 0 }, count = A.indexOf(parts[2][ds.pos++]);
   for (let i = 0; i < count; i++) dictionary.push(variable(parts[2], ds));
@@ -1493,9 +1469,9 @@ function decode(data) {
       const durations = flags & 2 ? Array(count).fill(flags & 4 ? dictionary[A.indexOf(body[st.pos++])] : variable(body, st)) : pitches.map(() => variable(body, st));
       for (let i = 0; i < count; i++) events.push({ kind: 'N', tick, channel, pitch: pitches[i], level: levels[i], duration: durations[i] });
     } else if (kind === 'E') return { division, events, endTick: tick };
-    else throw Error('invalid MIDI event');
+    // else throw Error('invalid MIDI event');
   }
-  throw Error('missing MIDI end');
+  // throw Error('missing MIDI end');
 }
 
 function secondsAt(tick, tempos, division) {
@@ -1526,15 +1502,15 @@ function oscillator(ctx, type, frequency, output, time, stop, detune = 0) {
   return source;
 }
 
-function profile(program) {
-  if (program === 12 || program === 115) return { type: 'mallet', cut: 5500, attack: .003, release: .16 };
-  if (program >= 32 && program < 40) return { type: 'bass', cut: 900, attack: .008, release: .1 };
-  if (program >= 56 && program < 72) return { type: 'brass', cut: 2100, attack: .035, release: .11 };
-  if (program >= 16 && program < 32) return { type: 'pluck', cut: 2600, attack: .006, release: .13 };
-  if (program >= 8 && program < 16) return { type: 'mallet', cut: 5000, attack: .003, release: .14 };
-  if (program >= 24 && program < 32) return { type: 'pluck', cut: 1800, attack: .008, release: .15 };
-  if (program >= 40 && program < 56) return { type: 'string', cut: 1800, attack: .045, release: .18 };
-  if (program >= 80 && program < 96) return { type: 'pad', cut: 1400, attack: .08, release: .3 };
+function profile(p) { // p = program
+  if (p === 12 || p === 115) return { type: 'mallet', cut: 5500, attack: .003, release: .16 };
+  if (p >= 32 && p < 40) return { type: 'bass', cut: 900, attack: .008, release: .1 };
+  if (p >= 56 && p < 72) return { type: 'brass', cut: 2100, attack: .035, release: .11 };
+  if (p >= 16 && p < 32) return { type: 'pluck', cut: 2600, attack: .006, release: .13 };
+  if (p >= 8 && p < 16) return { type: 'mallet', cut: 5000, attack: .003, release: .14 };
+  if (p >= 24 && p < 32) return { type: 'pluck', cut: 1800, attack: .008, release: .15 };
+  if (p >= 40 && p < 56) return { type: 'string', cut: 1800, attack: .045, release: .18 };
+  if (p >= 80 && p < 96) return { type: 'pad', cut: 1400, attack: .08, release: .3 };
   return { type: 'piano', cut: 3200, attack: .004, release: .2 };
 }
 

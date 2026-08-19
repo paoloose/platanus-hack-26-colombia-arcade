@@ -968,8 +968,11 @@ class PixelArtEditor {
             <h3>App State</h3>
             <button id="save-app-state">Save App State</button>
             <button id="load-app-state">Load App State</button>
+            <button id="download-app-state" style="margin-top: 6px;">Download Backup (.json)</button>
+            <input type="file" id="upload-app-state-file" accept=".json,application/json" style="display: none;">
+            <button id="upload-app-state" style="margin-top: 4px; background: #555;">Upload Backup (.json)</button>
             <p style="font-size: 11px; color: #888; margin-top: 4px;">
-              Saves a backup to IndexedDB (pixelart_app_state_backup) and restores it later.
+              Save to IndexedDB or download/upload a full JSON backup file.
             </p>
           </div>
           <div class="sidebar-section">
@@ -2732,6 +2735,63 @@ class PixelArtEditor {
             loadAppStateBtn.textContent = originalText;
             loadAppStateBtn.style.background = '';
           }, 1200);
+        }
+      });
+    }
+
+    const downloadAppStateBtn = document.getElementById('download-app-state');
+    if (downloadAppStateBtn) {
+      downloadAppStateBtn.addEventListener('click', () => {
+        try {
+          const stateData = this.tabManager.getStateData();
+          const jsonStr = JSON.stringify(stateData, null, 2);
+          const blob = new Blob([jsonStr], { type: 'application/json' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+          a.href = url;
+          a.download = `pixelart_backup_${timestamp}.json`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        } catch (err) {
+          console.error('Failed to download backup:', err);
+          alert('Failed to generate backup download.');
+        }
+      });
+    }
+
+    const uploadAppStateBtn = document.getElementById('upload-app-state');
+    const uploadAppStateFile = document.getElementById('upload-app-state-file');
+    if (uploadAppStateBtn && uploadAppStateFile) {
+      uploadAppStateBtn.addEventListener('click', () => {
+        uploadAppStateFile.click();
+      });
+
+      uploadAppStateFile.addEventListener('change', async (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        try {
+          const text = await file.text();
+          const data = JSON.parse(text);
+          if (this.tabManager.setStateData(data)) {
+            await this.tabManager.saveTabs();
+            this.render();
+            this.setupEventListeners();
+            this.updateCanvasSize();
+            this.renderTimeline();
+            this.draw();
+            this.drawGuidanceImages();
+            alert('Backup successfully restored!');
+          } else {
+            alert('Invalid backup JSON file.');
+          }
+        } catch (err) {
+          console.error('Failed to restore backup file:', err);
+          alert('Failed to parse backup file. Please ensure it is a valid JSON backup.');
+        } finally {
+          uploadAppStateFile.value = '';
         }
       });
     }
