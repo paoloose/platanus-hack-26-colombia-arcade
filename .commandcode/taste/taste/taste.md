@@ -17,3 +17,6 @@
 - Wants game state and audio to freeze/resume together when unfocused so arrows and song events never drift out of time. Confidence: 0.85
 - Wants sound effects / audio feedback for player events in games, using game-like cues (e.g., a damage-like buzz) rather than silent state changes. Confidence: 0.75
 - Prefers an analysis-first workflow: requests a full audit of current state (features, tech, status, weak points) and then personally directs which improvements to make, rather than the assistant proactively implementing changes. Confidence: 0.7
+- Playtests the game in-browser and reports bugs tersely from firsthand observation (e.g., "i see some sprite flickering, fix that"), expecting the assistant to trace the root cause and fix it directly. Confidence: 0.65
+- Holds visual polish to a frame level — even a single-frame glitch (e.g., sprites rendering at origin for one frame during a scene transition) counts as a bug worth fixing. Confidence: 0.7
+- Edits the codebase in parallel during the session (files changed on disk between assistant turns), so files must be re-read before applying edits to avoid stale, rejected changes. Confidence: 0.7
