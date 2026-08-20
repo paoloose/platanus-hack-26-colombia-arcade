@@ -21,7 +21,7 @@ OLD_LINE = re.compile(r'var MIDI_SONG = "[^"]+";\n')
 
 SONG_LIST = [
     ("barranquilla.mid", [(0.00, 43.20), (100.80, 132.80), (166.40, 182.80), (308.80, None)]),
-    ("fruko_y_sus_tesos.mid", [(0.0, 60.0)]),
+    ("fruko_y_sus_tesos.mid", [ (0.00, 19.80), (48.60, 54.80), (68.70, 88.40), (208.60, None) ]),
     ("loba.mid", [(1.8, 73.0)]),
     ("nuestra_cancion.mid", [(2.0, 93.0)]),
 ]
