@@ -1,0 +1,565 @@
+==================================================
+ INITIAL ANALYSIS: REPEATING SEGMENTS PER CHANNEL 
+==================================================
+
+--- Channel 0 ---
+  12.20s (0m12.20s) loop (at 182.00s (3m02.00s), repeats at 196.60s (3m16.60s))
+  8.60s (0m08.60s) loop (at 154.20s (2m34.20s), repeats at 173.40s (2m53.40s))
+  8.30s (0m08.30s) loop (at 65.70s (1m05.70s), repeats at 75.30s (1m15.30s))
+  6.20s (0m06.20s) loop (at 53.60s (0m53.60s), repeats at 58.40s (0m58.40s))
+  5.80s (0m05.80s) loop (at 195.60s (3m15.60s), repeats at 205.20s (3m25.20s))
+
+--- Channel 1 ---
+  8.30s (0m08.30s) loop (at 65.70s (1m05.70s), repeats at 75.30s (1m15.30s))
+  7.60s (0m07.60s) loop (at 193.80s (3m13.80s), repeats at 203.40s (3m23.40s))
+  6.20s (0m06.20s) loop (at 53.60s (0m53.60s), repeats at 58.40s (0m58.40s))
+  2.40s (0m02.40s) loop (at 54.80s (0m54.80s), repeats at 68.70s (1m08.70s))
+  2.40s (0m02.40s) loop (at 54.80s (0m54.80s), repeats at 78.30s (1m18.30s))
+
+--- Channel 2 ---
+  19.40s (0m19.40s) loop (at 182.00s (3m02.00s), repeats at 201.40s (3m21.40s))
+  8.60s (0m08.60s) loop (at 154.20s (2m34.20s), repeats at 173.40s (2m53.40s))
+  8.20s (0m08.20s) loop (at 144.60s (2m24.60s), repeats at 231.00s (3m51.00s))
+  6.20s (0m06.20s) loop (at 53.60s (0m53.60s), repeats at 58.40s (0m58.40s))
+  3.40s (0m03.40s) loop (at 144.60s (2m24.60s), repeats at 149.40s (2m29.40s))
+
+--- Channel 3 ---
+  11.40s (0m11.40s) loop (at 229.60s (3m49.60s), repeats at 240.60s (4m00.60s))
+  8.60s (0m08.60s) loop (at 154.20s (2m34.20s), repeats at 173.40s (2m53.40s))
+  8.40s (0m08.40s) loop (at 20.00s (0m20.00s), repeats at 29.60s (0m29.60s))
+  8.00s (0m08.00s) loop (at 135.20s (2m15.20s), repeats at 221.60s (3m41.60s))
+  7.60s (0m07.60s) loop (at 193.80s (3m13.80s), repeats at 203.40s (3m23.40s))
+
+--- Channel 5 ---
+  39.50s (0m39.50s) loop (at 47.20s (0m47.20s), repeats at 229.20s (3m49.20s))
+  38.90s (0m38.90s) loop (at 47.80s (0m47.80s), repeats at 154.80s (2m34.80s))
+  8.60s (0m08.60s) loop (at 154.20s (2m34.20s), repeats at 173.40s (2m53.40s))
+  8.40s (0m08.40s) loop (at 20.00s (0m20.00s), repeats at 29.60s (0m29.60s))
+  8.00s (0m08.00s) loop (at 135.20s (2m15.20s), repeats at 221.60s (3m41.60s))
+
+--- Channel 7 ---
+  8.60s (0m08.60s) loop (at 154.20s (2m34.20s), repeats at 173.40s (2m53.40s))
+  8.40s (0m08.40s) loop (at 20.00s (0m20.00s), repeats at 29.60s (0m29.60s))
+  8.20s (0m08.20s) loop (at 144.60s (2m24.60s), repeats at 231.00s (3m51.00s))
+  7.60s (0m07.60s) loop (at 193.80s (3m13.80s), repeats at 203.40s (3m23.40s))
+  3.40s (0m03.40s) loop (at 93.00s (1m33.00s), repeats at 97.80s (1m37.80s))
+
+--- Channel 8 ---
+  72.90s (1m12.90s) loop (at 47.40s (0m47.40s), repeats at 52.00s (0m52.00s))
+  27.60s (0m27.60s) loop (at 19.80s (0m19.80s), repeats at 48.60s (0m48.60s))
+  27.60s (0m27.60s) loop (at 19.80s (0m19.80s), repeats at 77.40s (1m17.40s))
+  24.20s (0m24.20s) loop (at 23.20s (0m23.20s), repeats at 47.40s (0m47.40s))
+  23.20s (0m23.20s) loop (at 19.80s (0m19.80s), repeats at 24.60s (0m24.60s))
+
+--- Channel 10 ---
+  72.90s (1m12.90s) loop (at 47.40s (0m47.40s), repeats at 52.00s (0m52.00s))
+  32.20s (0m32.20s) loop (at 154.20s (2m34.20s), repeats at 159.00s (2m39.00s))
+  28.60s (0m28.60s) loop (at 125.40s (2m05.40s), repeats at 211.80s (3m31.80s))
+  27.40s (0m27.40s) loop (at 19.80s (0m19.80s), repeats at 48.60s (0m48.60s))
+  27.40s (0m27.40s) loop (at 19.80s (0m19.80s), repeats at 77.40s (1m17.40s))
+
+--- Channel 11 ---
+  72.90s (1m12.90s) loop (at 47.40s (0m47.40s), repeats at 52.00s (0m52.00s))
+  46.90s (0m46.90s) loop (at 0.30s (0m00.30s), repeats at 48.30s (0m48.30s))
+  42.10s (0m42.10s) loop (at 0.30s (0m00.30s), repeats at 5.10s (0m05.10s))
+  28.80s (0m28.80s) loop (at 125.10s (2m05.10s), repeats at 211.80s (3m31.80s))
+  28.80s (0m28.80s) loop (at 9.90s (0m09.90s), repeats at 96.30s (1m36.30s))
+
+==================================================
+ SPEEDRUN VERSIONS (50s to 120s Playtime)
+==================================================
+Version 1: Playtime 64.00s (1m04.00s) (2 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 77.40s (1m17.40s)
+  Jump 2: Play until 88.40s (1m28.40s) -> Skip to 208.60s (3m28.60s)
+  embed.py format: [ (0.00, 19.80), (77.40, 88.40), (208.60, None) ]
+
+Version 2: Playtime 69.00s (1m09.00s) (2 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 106.20s (1m46.20s)
+  Jump 2: Play until 144.60s (2m24.60s) -> Skip to 231.00s (3m51.00s)
+  embed.py format: [ (0.00, 19.80), (106.20, 144.60), (231.00, None) ]
+
+Version 3: Playtime 69.00s (1m09.00s) (2 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 106.20s (1m46.20s)
+  Jump 2: Play until 135.20s (2m15.20s) -> Skip to 221.60s (3m41.60s)
+  embed.py format: [ (0.00, 19.80), (106.20, 135.20), (221.60, None) ]
+
+Version 4: Playtime 69.00s (1m09.00s) (3 jumps)
+  Jump 1: Play until 20.00s (0m20.00s) -> Skip to 29.60s (0m29.60s)
+  Jump 2: Play until 40.00s (0m40.00s) -> Skip to 116.80s (1m56.80s)
+  Jump 3: Play until 144.60s (2m24.60s) -> Skip to 231.00s (3m51.00s)
+  embed.py format: [ (0.00, 20.00), (29.60, 40.00), (116.80, 144.60), (231.00, None) ]
+
+Version 5: Playtime 69.00s (1m09.00s) (3 jumps)
+  Jump 1: Play until 20.00s (0m20.00s) -> Skip to 29.60s (0m29.60s)
+  Jump 2: Play until 40.00s (0m40.00s) -> Skip to 116.80s (1m56.80s)
+  Jump 3: Play until 135.20s (2m15.20s) -> Skip to 221.60s (3m41.60s)
+  embed.py format: [ (0.00, 20.00), (29.60, 40.00), (116.80, 135.20), (221.60, None) ]
+
+Version 6: Playtime 69.00s (1m09.00s) (2 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 106.20s (1m46.20s)
+  Jump 2: Play until 125.80s (2m05.80s) -> Skip to 212.20s (3m32.20s)
+  embed.py format: [ (0.00, 19.80), (106.20, 125.80), (212.20, None) ]
+
+Version 7: Playtime 69.00s (1m09.00s) (3 jumps)
+  Jump 1: Play until 20.00s (0m20.00s) -> Skip to 29.60s (0m29.60s)
+  Jump 2: Play until 40.00s (0m40.00s) -> Skip to 116.80s (1m56.80s)
+  Jump 3: Play until 125.80s (2m05.80s) -> Skip to 212.20s (3m32.20s)
+  embed.py format: [ (0.00, 20.00), (29.60, 40.00), (116.80, 125.80), (212.20, None) ]
+
+Version 8: Playtime 69.30s (1m09.30s) (3 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 48.60s (0m48.60s)
+  Jump 2: Play until 54.80s (0m54.80s) -> Skip to 78.30s (1m18.30s)
+  Jump 3: Play until 88.40s (1m28.40s) -> Skip to 208.60s (3m28.60s)
+  embed.py format: [ (0.00, 19.80), (48.60, 54.80), (78.30, 88.40), (208.60, None) ]
+
+Version 9: Playtime 73.60s (1m13.60s) (2 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 77.40s (1m17.40s)
+  Jump 2: Play until 88.40s (1m28.40s) -> Skip to 199.00s (3m19.00s)
+  embed.py format: [ (0.00, 19.80), (77.40, 88.40), (199.00, None) ]
+
+Version 10: Playtime 73.90s (1m13.90s) (3 jumps)
+  Jump 1: Play until 23.20s (0m23.20s) -> Skip to 47.40s (0m47.40s)
+  Jump 2: Play until 54.80s (0m54.80s) -> Skip to 78.30s (1m18.30s)
+  Jump 3: Play until 88.40s (1m28.40s) -> Skip to 208.60s (3m28.60s)
+  embed.py format: [ (0.00, 23.20), (47.40, 54.80), (78.30, 88.40), (208.60, None) ]
+
+Version 11: Playtime 74.10s (1m14.10s) (3 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 48.60s (0m48.60s)
+  Jump 2: Play until 59.60s (0m59.60s) -> Skip to 78.30s (1m18.30s)
+  Jump 3: Play until 88.40s (1m28.40s) -> Skip to 208.60s (3m28.60s)
+  embed.py format: [ (0.00, 19.80), (48.60, 59.60), (78.30, 88.40), (208.60, None) ]
+
+Version 12: Playtime 78.60s (1m18.60s) (3 jumps)
+  Jump 1: Play until 20.00s (0m20.00s) -> Skip to 29.60s (0m29.60s)
+  Jump 2: Play until 40.00s (0m40.00s) -> Skip to 107.20s (1m47.20s)
+  Jump 3: Play until 144.60s (2m24.60s) -> Skip to 231.00s (3m51.00s)
+  embed.py format: [ (0.00, 20.00), (29.60, 40.00), (107.20, 144.60), (231.00, None) ]
+
+Version 13: Playtime 78.60s (1m18.60s) (3 jumps)
+  Jump 1: Play until 20.00s (0m20.00s) -> Skip to 29.60s (0m29.60s)
+  Jump 2: Play until 40.00s (0m40.00s) -> Skip to 107.20s (1m47.20s)
+  Jump 3: Play until 135.20s (2m15.20s) -> Skip to 221.60s (3m41.60s)
+  embed.py format: [ (0.00, 20.00), (29.60, 40.00), (107.20, 135.20), (221.60, None) ]
+
+Version 14: Playtime 78.60s (1m18.60s) (2 jumps)
+  Jump 1: Play until 40.00s (0m40.00s) -> Skip to 116.80s (1m56.80s)
+  Jump 2: Play until 144.60s (2m24.60s) -> Skip to 231.00s (3m51.00s)
+  embed.py format: [ (0.00, 40.00), (116.80, 144.60), (231.00, None) ]
+
+Version 15: Playtime 78.60s (1m18.60s) (2 jumps)
+  Jump 1: Play until 40.00s (0m40.00s) -> Skip to 116.80s (1m56.80s)
+  Jump 2: Play until 135.20s (2m15.20s) -> Skip to 221.60s (3m41.60s)
+  embed.py format: [ (0.00, 40.00), (116.80, 135.20), (221.60, None) ]
+
+Version 16: Playtime 78.60s (1m18.60s) (2 jumps)
+  Jump 1: Play until 40.00s (0m40.00s) -> Skip to 116.80s (1m56.80s)
+  Jump 2: Play until 125.80s (2m05.80s) -> Skip to 212.20s (3m32.20s)
+  embed.py format: [ (0.00, 40.00), (116.80, 125.80), (212.20, None) ]
+
+Version 17: Playtime 78.60s (1m18.60s) (3 jumps)
+  Jump 1: Play until 20.00s (0m20.00s) -> Skip to 29.60s (0m29.60s)
+  Jump 2: Play until 40.00s (0m40.00s) -> Skip to 107.20s (1m47.20s)
+  Jump 3: Play until 125.80s (2m05.80s) -> Skip to 212.20s (3m32.20s)
+  embed.py format: [ (0.00, 20.00), (29.60, 40.00), (107.20, 125.80), (212.20, None) ]
+
+Version 18: Playtime 78.70s (1m18.70s) (3 jumps)
+  Jump 1: Play until 23.20s (0m23.20s) -> Skip to 47.40s (0m47.40s)
+  Jump 2: Play until 59.60s (0m59.60s) -> Skip to 78.30s (1m18.30s)
+  Jump 3: Play until 88.40s (1m28.40s) -> Skip to 208.60s (3m28.60s)
+  embed.py format: [ (0.00, 23.20), (47.40, 59.60), (78.30, 88.40), (208.60, None) ]
+
+Version 19: Playtime 78.90s (1m18.90s) (3 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 48.60s (0m48.60s)
+  Jump 2: Play until 54.80s (0m54.80s) -> Skip to 68.70s (1m08.70s)
+  Jump 3: Play until 88.40s (1m28.40s) -> Skip to 208.60s (3m28.60s)
+  embed.py format: [ (0.00, 19.80), (48.60, 54.80), (68.70, 88.40), (208.60, None) ]
+
+Version 20: Playtime 78.90s (1m18.90s) (3 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 48.60s (0m48.60s)
+  Jump 2: Play until 54.80s (0m54.80s) -> Skip to 78.30s (1m18.30s)
+  Jump 3: Play until 88.40s (1m28.40s) -> Skip to 199.00s (3m19.00s)
+  embed.py format: [ (0.00, 19.80), (48.60, 54.80), (78.30, 88.40), (199.00, None) ]
+
+Version 21: Playtime 83.20s (1m23.20s) (3 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 48.60s (0m48.60s)
+  Jump 2: Play until 65.70s (1m05.70s) -> Skip to 75.30s (1m15.30s)
+  Jump 3: Play until 88.40s (1m28.40s) -> Skip to 208.60s (3m28.60s)
+  embed.py format: [ (0.00, 19.80), (48.60, 65.70), (75.30, 88.40), (208.60, None) ]
+
+Version 22: Playtime 83.50s (1m23.50s) (3 jumps)
+  Jump 1: Play until 23.20s (0m23.20s) -> Skip to 47.40s (0m47.40s)
+  Jump 2: Play until 54.80s (0m54.80s) -> Skip to 68.70s (1m08.70s)
+  Jump 3: Play until 88.40s (1m28.40s) -> Skip to 208.60s (3m28.60s)
+  embed.py format: [ (0.00, 23.20), (47.40, 54.80), (68.70, 88.40), (208.60, None) ]
+
+Version 23: Playtime 83.50s (1m23.50s) (3 jumps)
+  Jump 1: Play until 23.20s (0m23.20s) -> Skip to 47.40s (0m47.40s)
+  Jump 2: Play until 54.80s (0m54.80s) -> Skip to 78.30s (1m18.30s)
+  Jump 3: Play until 88.40s (1m28.40s) -> Skip to 199.00s (3m19.00s)
+  embed.py format: [ (0.00, 23.20), (47.40, 54.80), (78.30, 88.40), (199.00, None) ]
+
+Version 24: Playtime 83.70s (1m23.70s) (3 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 48.60s (0m48.60s)
+  Jump 2: Play until 59.60s (0m59.60s) -> Skip to 68.70s (1m08.70s)
+  Jump 3: Play until 88.40s (1m28.40s) -> Skip to 208.60s (3m28.60s)
+  embed.py format: [ (0.00, 19.80), (48.60, 59.60), (68.70, 88.40), (208.60, None) ]
+
+Version 25: Playtime 83.70s (1m23.70s) (3 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 48.60s (0m48.60s)
+  Jump 2: Play until 59.60s (0m59.60s) -> Skip to 78.30s (1m18.30s)
+  Jump 3: Play until 88.40s (1m28.40s) -> Skip to 199.00s (3m19.00s)
+  embed.py format: [ (0.00, 19.80), (48.60, 59.60), (78.30, 88.40), (199.00, None) ]
+
+Version 26: Playtime 87.80s (1m27.80s) (3 jumps)
+  Jump 1: Play until 23.20s (0m23.20s) -> Skip to 47.40s (0m47.40s)
+  Jump 2: Play until 65.70s (1m05.70s) -> Skip to 75.30s (1m15.30s)
+  Jump 3: Play until 88.40s (1m28.40s) -> Skip to 208.60s (3m28.60s)
+  embed.py format: [ (0.00, 23.20), (47.40, 65.70), (75.30, 88.40), (208.60, None) ]
+
+Version 27: Playtime 88.20s (1m28.20s) (2 jumps)
+  Jump 1: Play until 40.00s (0m40.00s) -> Skip to 107.20s (1m47.20s)
+  Jump 2: Play until 144.60s (2m24.60s) -> Skip to 231.00s (3m51.00s)
+  embed.py format: [ (0.00, 40.00), (107.20, 144.60), (231.00, None) ]
+
+Version 28: Playtime 88.20s (1m28.20s) (2 jumps)
+  Jump 1: Play until 40.00s (0m40.00s) -> Skip to 107.20s (1m47.20s)
+  Jump 2: Play until 135.20s (2m15.20s) -> Skip to 221.60s (3m41.60s)
+  embed.py format: [ (0.00, 40.00), (107.20, 135.20), (221.60, None) ]
+
+Version 29: Playtime 88.20s (1m28.20s) (2 jumps)
+  Jump 1: Play until 40.00s (0m40.00s) -> Skip to 107.20s (1m47.20s)
+  Jump 2: Play until 125.80s (2m05.80s) -> Skip to 212.20s (3m32.20s)
+  embed.py format: [ (0.00, 40.00), (107.20, 125.80), (212.20, None) ]
+
+Version 30: Playtime 88.30s (1m28.30s) (3 jumps)
+  Jump 1: Play until 23.20s (0m23.20s) -> Skip to 47.40s (0m47.40s)
+  Jump 2: Play until 59.60s (0m59.60s) -> Skip to 68.70s (1m08.70s)
+  Jump 3: Play until 88.40s (1m28.40s) -> Skip to 208.60s (3m28.60s)
+  embed.py format: [ (0.00, 23.20), (47.40, 59.60), (68.70, 88.40), (208.60, None) ]
+
+Version 31: Playtime 88.30s (1m28.30s) (3 jumps)
+  Jump 1: Play until 23.20s (0m23.20s) -> Skip to 47.40s (0m47.40s)
+  Jump 2: Play until 59.60s (0m59.60s) -> Skip to 78.30s (1m18.30s)
+  Jump 3: Play until 88.40s (1m28.40s) -> Skip to 199.00s (3m19.00s)
+  embed.py format: [ (0.00, 23.20), (47.40, 59.60), (78.30, 88.40), (199.00, None) ]
+
+Version 32: Playtime 88.50s (1m28.50s) (3 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 48.60s (0m48.60s)
+  Jump 2: Play until 54.80s (0m54.80s) -> Skip to 68.70s (1m08.70s)
+  Jump 3: Play until 88.40s (1m28.40s) -> Skip to 199.00s (3m19.00s)
+  embed.py format: [ (0.00, 19.80), (48.60, 54.80), (68.70, 88.40), (199.00, None) ]
+
+Version 33: Playtime 88.50s (1m28.50s) (3 jumps)
+  Jump 1: Play until 20.00s (0m20.00s) -> Skip to 29.60s (0m29.60s)
+  Jump 2: Play until 54.80s (0m54.80s) -> Skip to 78.30s (1m18.30s)
+  Jump 3: Play until 88.40s (1m28.40s) -> Skip to 208.60s (3m28.60s)
+  embed.py format: [ (0.00, 20.00), (29.60, 54.80), (78.30, 88.40), (208.60, None) ]
+
+Version 34: Playtime 92.80s (1m32.80s) (2 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 48.60s (0m48.60s)
+  Jump 2: Play until 88.40s (1m28.40s) -> Skip to 208.60s (3m28.60s)
+  embed.py format: [ (0.00, 19.80), (48.60, 88.40), (208.60, None) ]
+
+Version 35: Playtime 92.80s (1m32.80s) (3 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 48.60s (0m48.60s)
+  Jump 2: Play until 65.70s (1m05.70s) -> Skip to 75.30s (1m15.30s)
+  Jump 3: Play until 88.40s (1m28.40s) -> Skip to 199.00s (3m19.00s)
+  embed.py format: [ (0.00, 19.80), (48.60, 65.70), (75.30, 88.40), (199.00, None) ]
+
+Version 36: Playtime 93.10s (1m33.10s) (3 jumps)
+  Jump 1: Play until 23.20s (0m23.20s) -> Skip to 47.40s (0m47.40s)
+  Jump 2: Play until 54.80s (0m54.80s) -> Skip to 68.70s (1m08.70s)
+  Jump 3: Play until 88.40s (1m28.40s) -> Skip to 199.00s (3m19.00s)
+  embed.py format: [ (0.00, 23.20), (47.40, 54.80), (68.70, 88.40), (199.00, None) ]
+
+Version 37: Playtime 93.30s (1m33.30s) (3 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 48.60s (0m48.60s)
+  Jump 2: Play until 59.60s (0m59.60s) -> Skip to 68.70s (1m08.70s)
+  Jump 3: Play until 88.40s (1m28.40s) -> Skip to 199.00s (3m19.00s)
+  embed.py format: [ (0.00, 19.80), (48.60, 59.60), (68.70, 88.40), (199.00, None) ]
+
+Version 38: Playtime 93.30s (1m33.30s) (3 jumps)
+  Jump 1: Play until 20.00s (0m20.00s) -> Skip to 29.60s (0m29.60s)
+  Jump 2: Play until 59.60s (0m59.60s) -> Skip to 78.30s (1m18.30s)
+  Jump 3: Play until 88.40s (1m28.40s) -> Skip to 208.60s (3m28.60s)
+  embed.py format: [ (0.00, 20.00), (29.60, 59.60), (78.30, 88.40), (208.60, None) ]
+
+Version 39: Playtime 97.40s (1m37.40s) (2 jumps)
+  Jump 1: Play until 23.20s (0m23.20s) -> Skip to 47.40s (0m47.40s)
+  Jump 2: Play until 88.40s (1m28.40s) -> Skip to 208.60s (3m28.60s)
+  embed.py format: [ (0.00, 23.20), (47.40, 88.40), (208.60, None) ]
+
+Version 40: Playtime 97.40s (1m37.40s) (3 jumps)
+  Jump 1: Play until 23.20s (0m23.20s) -> Skip to 47.40s (0m47.40s)
+  Jump 2: Play until 65.70s (1m05.70s) -> Skip to 75.30s (1m15.30s)
+  Jump 3: Play until 88.40s (1m28.40s) -> Skip to 199.00s (3m19.00s)
+  embed.py format: [ (0.00, 23.20), (47.40, 65.70), (75.30, 88.40), (199.00, None) ]
+
+Version 41: Playtime 97.80s (1m37.80s) (2 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 77.40s (1m17.40s)
+  Jump 2: Play until 144.60s (2m24.60s) -> Skip to 231.00s (3m51.00s)
+  embed.py format: [ (0.00, 19.80), (77.40, 144.60), (231.00, None) ]
+
+Version 42: Playtime 97.80s (1m37.80s) (2 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 77.40s (1m17.40s)
+  Jump 2: Play until 135.20s (2m15.20s) -> Skip to 221.60s (3m41.60s)
+  embed.py format: [ (0.00, 19.80), (77.40, 135.20), (221.60, None) ]
+
+Version 43: Playtime 97.80s (1m37.80s) (2 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 77.40s (1m17.40s)
+  Jump 2: Play until 125.80s (2m05.80s) -> Skip to 212.20s (3m32.20s)
+  embed.py format: [ (0.00, 19.80), (77.40, 125.80), (212.20, None) ]
+
+Version 44: Playtime 97.90s (1m37.90s) (3 jumps)
+  Jump 1: Play until 23.20s (0m23.20s) -> Skip to 47.40s (0m47.40s)
+  Jump 2: Play until 59.60s (0m59.60s) -> Skip to 68.70s (1m08.70s)
+  Jump 3: Play until 88.40s (1m28.40s) -> Skip to 199.00s (3m19.00s)
+  embed.py format: [ (0.00, 23.20), (47.40, 59.60), (68.70, 88.40), (199.00, None) ]
+
+Version 45: Playtime 98.10s (1m38.10s) (2 jumps)
+  Jump 1: Play until 54.80s (0m54.80s) -> Skip to 78.30s (1m18.30s)
+  Jump 2: Play until 88.40s (1m28.40s) -> Skip to 208.60s (3m28.60s)
+  embed.py format: [ (0.00, 54.80), (78.30, 88.40), (208.60, None) ]
+
+Version 46: Playtime 98.10s (1m38.10s) (3 jumps)
+  Jump 1: Play until 20.00s (0m20.00s) -> Skip to 29.60s (0m29.60s)
+  Jump 2: Play until 54.80s (0m54.80s) -> Skip to 68.70s (1m08.70s)
+  Jump 3: Play until 88.40s (1m28.40s) -> Skip to 208.60s (3m28.60s)
+  embed.py format: [ (0.00, 20.00), (29.60, 54.80), (68.70, 88.40), (208.60, None) ]
+
+Version 47: Playtime 98.10s (1m38.10s) (3 jumps)
+  Jump 1: Play until 20.00s (0m20.00s) -> Skip to 29.60s (0m29.60s)
+  Jump 2: Play until 54.80s (0m54.80s) -> Skip to 78.30s (1m18.30s)
+  Jump 3: Play until 88.40s (1m28.40s) -> Skip to 199.00s (3m19.00s)
+  embed.py format: [ (0.00, 20.00), (29.60, 54.80), (78.30, 88.40), (199.00, None) ]
+
+Version 48: Playtime 102.40s (1m42.40s) (2 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 48.60s (0m48.60s)
+  Jump 2: Play until 88.40s (1m28.40s) -> Skip to 199.00s (3m19.00s)
+  embed.py format: [ (0.00, 19.80), (48.60, 88.40), (199.00, None) ]
+
+Version 49: Playtime 102.40s (1m42.40s) (3 jumps)
+  Jump 1: Play until 20.00s (0m20.00s) -> Skip to 29.60s (0m29.60s)
+  Jump 2: Play until 65.70s (1m05.70s) -> Skip to 75.30s (1m15.30s)
+  Jump 3: Play until 88.40s (1m28.40s) -> Skip to 208.60s (3m28.60s)
+  embed.py format: [ (0.00, 20.00), (29.60, 65.70), (75.30, 88.40), (208.60, None) ]
+
+Version 50: Playtime 102.90s (1m42.90s) (3 jumps)
+  Jump 1: Play until 20.00s (0m20.00s) -> Skip to 29.60s (0m29.60s)
+  Jump 2: Play until 59.60s (0m59.60s) -> Skip to 68.70s (1m08.70s)
+  Jump 3: Play until 88.40s (1m28.40s) -> Skip to 208.60s (3m28.60s)
+  embed.py format: [ (0.00, 20.00), (29.60, 59.60), (68.70, 88.40), (208.60, None) ]
+
+Version 51: Playtime 102.90s (1m42.90s) (3 jumps)
+  Jump 1: Play until 20.00s (0m20.00s) -> Skip to 29.60s (0m29.60s)
+  Jump 2: Play until 59.60s (0m59.60s) -> Skip to 78.30s (1m18.30s)
+  Jump 3: Play until 88.40s (1m28.40s) -> Skip to 199.00s (3m19.00s)
+  embed.py format: [ (0.00, 20.00), (29.60, 59.60), (78.30, 88.40), (199.00, None) ]
+
+Version 52: Playtime 102.90s (1m42.90s) (2 jumps)
+  Jump 1: Play until 59.60s (0m59.60s) -> Skip to 78.30s (1m18.30s)
+  Jump 2: Play until 88.40s (1m28.40s) -> Skip to 208.60s (3m28.60s)
+  embed.py format: [ (0.00, 59.60), (78.30, 88.40), (208.60, None) ]
+
+Version 53: Playtime 103.10s (1m43.10s) (3 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 48.60s (0m48.60s)
+  Jump 2: Play until 54.80s (0m54.80s) -> Skip to 78.30s (1m18.30s)
+  Jump 3: Play until 144.60s (2m24.60s) -> Skip to 231.00s (3m51.00s)
+  embed.py format: [ (0.00, 19.80), (48.60, 54.80), (78.30, 144.60), (231.00, None) ]
+
+Version 54: Playtime 103.10s (1m43.10s) (3 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 48.60s (0m48.60s)
+  Jump 2: Play until 54.80s (0m54.80s) -> Skip to 78.30s (1m18.30s)
+  Jump 3: Play until 135.20s (2m15.20s) -> Skip to 221.60s (3m41.60s)
+  embed.py format: [ (0.00, 19.80), (48.60, 54.80), (78.30, 135.20), (221.60, None) ]
+
+Version 55: Playtime 103.10s (1m43.10s) (3 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 48.60s (0m48.60s)
+  Jump 2: Play until 54.80s (0m54.80s) -> Skip to 78.30s (1m18.30s)
+  Jump 3: Play until 125.80s (2m05.80s) -> Skip to 212.20s (3m32.20s)
+  embed.py format: [ (0.00, 19.80), (48.60, 54.80), (78.30, 125.80), (212.20, None) ]
+
+Version 56: Playtime 107.00s (1m47.00s) (2 jumps)
+  Jump 1: Play until 23.20s (0m23.20s) -> Skip to 47.40s (0m47.40s)
+  Jump 2: Play until 88.40s (1m28.40s) -> Skip to 199.00s (3m19.00s)
+  embed.py format: [ (0.00, 23.20), (47.40, 88.40), (199.00, None) ]
+
+Version 57: Playtime 107.70s (1m47.70s) (3 jumps)
+  Jump 1: Play until 23.20s (0m23.20s) -> Skip to 47.40s (0m47.40s)
+  Jump 2: Play until 54.80s (0m54.80s) -> Skip to 78.30s (1m18.30s)
+  Jump 3: Play until 144.60s (2m24.60s) -> Skip to 231.00s (3m51.00s)
+  embed.py format: [ (0.00, 23.20), (47.40, 54.80), (78.30, 144.60), (231.00, None) ]
+
+Version 58: Playtime 107.70s (1m47.70s) (3 jumps)
+  Jump 1: Play until 23.20s (0m23.20s) -> Skip to 47.40s (0m47.40s)
+  Jump 2: Play until 54.80s (0m54.80s) -> Skip to 78.30s (1m18.30s)
+  Jump 3: Play until 135.20s (2m15.20s) -> Skip to 221.60s (3m41.60s)
+  embed.py format: [ (0.00, 23.20), (47.40, 54.80), (78.30, 135.20), (221.60, None) ]
+
+Version 59: Playtime 107.70s (1m47.70s) (2 jumps)
+  Jump 1: Play until 54.80s (0m54.80s) -> Skip to 68.70s (1m08.70s)
+  Jump 2: Play until 88.40s (1m28.40s) -> Skip to 208.60s (3m28.60s)
+  embed.py format: [ (0.00, 54.80), (68.70, 88.40), (208.60, None) ]
+
+Version 60: Playtime 107.70s (1m47.70s) (2 jumps)
+  Jump 1: Play until 54.80s (0m54.80s) -> Skip to 78.30s (1m18.30s)
+  Jump 2: Play until 88.40s (1m28.40s) -> Skip to 199.00s (3m19.00s)
+  embed.py format: [ (0.00, 54.80), (78.30, 88.40), (199.00, None) ]
+
+Version 61: Playtime 107.70s (1m47.70s) (3 jumps)
+  Jump 1: Play until 20.00s (0m20.00s) -> Skip to 29.60s (0m29.60s)
+  Jump 2: Play until 54.80s (0m54.80s) -> Skip to 68.70s (1m08.70s)
+  Jump 3: Play until 88.40s (1m28.40s) -> Skip to 199.00s (3m19.00s)
+  embed.py format: [ (0.00, 20.00), (29.60, 54.80), (68.70, 88.40), (199.00, None) ]
+
+Version 62: Playtime 107.70s (1m47.70s) (3 jumps)
+  Jump 1: Play until 23.20s (0m23.20s) -> Skip to 47.40s (0m47.40s)
+  Jump 2: Play until 54.80s (0m54.80s) -> Skip to 78.30s (1m18.30s)
+  Jump 3: Play until 125.80s (2m05.80s) -> Skip to 212.20s (3m32.20s)
+  embed.py format: [ (0.00, 23.20), (47.40, 54.80), (78.30, 125.80), (212.20, None) ]
+
+Version 63: Playtime 107.90s (1m47.90s) (3 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 48.60s (0m48.60s)
+  Jump 2: Play until 59.60s (0m59.60s) -> Skip to 78.30s (1m18.30s)
+  Jump 3: Play until 144.60s (2m24.60s) -> Skip to 231.00s (3m51.00s)
+  embed.py format: [ (0.00, 19.80), (48.60, 59.60), (78.30, 144.60), (231.00, None) ]
+
+Version 64: Playtime 107.90s (1m47.90s) (3 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 48.60s (0m48.60s)
+  Jump 2: Play until 59.60s (0m59.60s) -> Skip to 78.30s (1m18.30s)
+  Jump 3: Play until 135.20s (2m15.20s) -> Skip to 221.60s (3m41.60s)
+  embed.py format: [ (0.00, 19.80), (48.60, 59.60), (78.30, 135.20), (221.60, None) ]
+
+Version 65: Playtime 107.90s (1m47.90s) (3 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 48.60s (0m48.60s)
+  Jump 2: Play until 59.60s (0m59.60s) -> Skip to 78.30s (1m18.30s)
+  Jump 3: Play until 125.80s (2m05.80s) -> Skip to 212.20s (3m32.20s)
+  embed.py format: [ (0.00, 19.80), (48.60, 59.60), (78.30, 125.80), (212.20, None) ]
+
+Version 66: Playtime 112.00s (1m52.00s) (2 jumps)
+  Jump 1: Play until 65.70s (1m05.70s) -> Skip to 75.30s (1m15.30s)
+  Jump 2: Play until 88.40s (1m28.40s) -> Skip to 208.60s (3m28.60s)
+  embed.py format: [ (0.00, 65.70), (75.30, 88.40), (208.60, None) ]
+
+Version 67: Playtime 112.00s (1m52.00s) (2 jumps)
+  Jump 1: Play until 20.00s (0m20.00s) -> Skip to 29.60s (0m29.60s)
+  Jump 2: Play until 88.40s (1m28.40s) -> Skip to 208.60s (3m28.60s)
+  embed.py format: [ (0.00, 20.00), (29.60, 88.40), (208.60, None) ]
+
+Version 68: Playtime 112.00s (1m52.00s) (3 jumps)
+  Jump 1: Play until 20.00s (0m20.00s) -> Skip to 29.60s (0m29.60s)
+  Jump 2: Play until 65.70s (1m05.70s) -> Skip to 75.30s (1m15.30s)
+  Jump 3: Play until 88.40s (1m28.40s) -> Skip to 199.00s (3m19.00s)
+  embed.py format: [ (0.00, 20.00), (29.60, 65.70), (75.30, 88.40), (199.00, None) ]
+
+Version 69: Playtime 112.50s (1m52.50s) (3 jumps)
+  Jump 1: Play until 20.00s (0m20.00s) -> Skip to 29.60s (0m29.60s)
+  Jump 2: Play until 59.60s (0m59.60s) -> Skip to 68.70s (1m08.70s)
+  Jump 3: Play until 88.40s (1m28.40s) -> Skip to 199.00s (3m19.00s)
+  embed.py format: [ (0.00, 20.00), (29.60, 59.60), (68.70, 88.40), (199.00, None) ]
+
+Version 70: Playtime 112.50s (1m52.50s) (3 jumps)
+  Jump 1: Play until 23.20s (0m23.20s) -> Skip to 47.40s (0m47.40s)
+  Jump 2: Play until 59.60s (0m59.60s) -> Skip to 78.30s (1m18.30s)
+  Jump 3: Play until 144.60s (2m24.60s) -> Skip to 231.00s (3m51.00s)
+  embed.py format: [ (0.00, 23.20), (47.40, 59.60), (78.30, 144.60), (231.00, None) ]
+
+Version 71: Playtime 112.50s (1m52.50s) (3 jumps)
+  Jump 1: Play until 23.20s (0m23.20s) -> Skip to 47.40s (0m47.40s)
+  Jump 2: Play until 59.60s (0m59.60s) -> Skip to 78.30s (1m18.30s)
+  Jump 3: Play until 135.20s (2m15.20s) -> Skip to 221.60s (3m41.60s)
+  embed.py format: [ (0.00, 23.20), (47.40, 59.60), (78.30, 135.20), (221.60, None) ]
+
+Version 72: Playtime 112.50s (1m52.50s) (2 jumps)
+  Jump 1: Play until 59.60s (0m59.60s) -> Skip to 68.70s (1m08.70s)
+  Jump 2: Play until 88.40s (1m28.40s) -> Skip to 208.60s (3m28.60s)
+  embed.py format: [ (0.00, 59.60), (68.70, 88.40), (208.60, None) ]
+
+Version 73: Playtime 112.50s (1m52.50s) (2 jumps)
+  Jump 1: Play until 59.60s (0m59.60s) -> Skip to 78.30s (1m18.30s)
+  Jump 2: Play until 88.40s (1m28.40s) -> Skip to 199.00s (3m19.00s)
+  embed.py format: [ (0.00, 59.60), (78.30, 88.40), (199.00, None) ]
+
+Version 74: Playtime 112.50s (1m52.50s) (3 jumps)
+  Jump 1: Play until 23.20s (0m23.20s) -> Skip to 47.40s (0m47.40s)
+  Jump 2: Play until 59.60s (0m59.60s) -> Skip to 78.30s (1m18.30s)
+  Jump 3: Play until 125.80s (2m05.80s) -> Skip to 212.20s (3m32.20s)
+  embed.py format: [ (0.00, 23.20), (47.40, 59.60), (78.30, 125.80), (212.20, None) ]
+
+Version 75: Playtime 112.70s (1m52.70s) (3 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 48.60s (0m48.60s)
+  Jump 2: Play until 54.80s (0m54.80s) -> Skip to 68.70s (1m08.70s)
+  Jump 3: Play until 144.60s (2m24.60s) -> Skip to 231.00s (3m51.00s)
+  embed.py format: [ (0.00, 19.80), (48.60, 54.80), (68.70, 144.60), (231.00, None) ]
+
+Version 76: Playtime 112.70s (1m52.70s) (3 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 48.60s (0m48.60s)
+  Jump 2: Play until 54.80s (0m54.80s) -> Skip to 68.70s (1m08.70s)
+  Jump 3: Play until 135.20s (2m15.20s) -> Skip to 221.60s (3m41.60s)
+  embed.py format: [ (0.00, 19.80), (48.60, 54.80), (68.70, 135.20), (221.60, None) ]
+
+Version 77: Playtime 112.70s (1m52.70s) (3 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 48.60s (0m48.60s)
+  Jump 2: Play until 54.80s (0m54.80s) -> Skip to 68.70s (1m08.70s)
+  Jump 3: Play until 125.80s (2m05.80s) -> Skip to 212.20s (3m32.20s)
+  embed.py format: [ (0.00, 19.80), (48.60, 54.80), (68.70, 125.80), (212.20, None) ]
+
+Version 78: Playtime 117.00s (1m57.00s) (3 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 48.60s (0m48.60s)
+  Jump 2: Play until 65.70s (1m05.70s) -> Skip to 75.30s (1m15.30s)
+  Jump 3: Play until 144.60s (2m24.60s) -> Skip to 231.00s (3m51.00s)
+  embed.py format: [ (0.00, 19.80), (48.60, 65.70), (75.30, 144.60), (231.00, None) ]
+
+Version 79: Playtime 117.00s (1m57.00s) (3 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 48.60s (0m48.60s)
+  Jump 2: Play until 65.70s (1m05.70s) -> Skip to 75.30s (1m15.30s)
+  Jump 3: Play until 135.20s (2m15.20s) -> Skip to 221.60s (3m41.60s)
+  embed.py format: [ (0.00, 19.80), (48.60, 65.70), (75.30, 135.20), (221.60, None) ]
+
+Version 80: Playtime 117.00s (1m57.00s) (3 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 48.60s (0m48.60s)
+  Jump 2: Play until 65.70s (1m05.70s) -> Skip to 75.30s (1m15.30s)
+  Jump 3: Play until 125.80s (2m05.80s) -> Skip to 212.20s (3m32.20s)
+  embed.py format: [ (0.00, 19.80), (48.60, 65.70), (75.30, 125.80), (212.20, None) ]
+
+Version 81: Playtime 117.30s (1m57.30s) (3 jumps)
+  Jump 1: Play until 23.20s (0m23.20s) -> Skip to 47.40s (0m47.40s)
+  Jump 2: Play until 54.80s (0m54.80s) -> Skip to 68.70s (1m08.70s)
+  Jump 3: Play until 144.60s (2m24.60s) -> Skip to 231.00s (3m51.00s)
+  embed.py format: [ (0.00, 23.20), (47.40, 54.80), (68.70, 144.60), (231.00, None) ]
+
+Version 82: Playtime 117.30s (1m57.30s) (3 jumps)
+  Jump 1: Play until 23.20s (0m23.20s) -> Skip to 47.40s (0m47.40s)
+  Jump 2: Play until 54.80s (0m54.80s) -> Skip to 68.70s (1m08.70s)
+  Jump 3: Play until 135.20s (2m15.20s) -> Skip to 221.60s (3m41.60s)
+  embed.py format: [ (0.00, 23.20), (47.40, 54.80), (68.70, 135.20), (221.60, None) ]
+
+Version 83: Playtime 117.30s (1m57.30s) (2 jumps)
+  Jump 1: Play until 54.80s (0m54.80s) -> Skip to 68.70s (1m08.70s)
+  Jump 2: Play until 88.40s (1m28.40s) -> Skip to 199.00s (3m19.00s)
+  embed.py format: [ (0.00, 54.80), (68.70, 88.40), (199.00, None) ]
+
+Version 84: Playtime 117.30s (1m57.30s) (3 jumps)
+  Jump 1: Play until 23.20s (0m23.20s) -> Skip to 47.40s (0m47.40s)
+  Jump 2: Play until 54.80s (0m54.80s) -> Skip to 68.70s (1m08.70s)
+  Jump 3: Play until 125.80s (2m05.80s) -> Skip to 212.20s (3m32.20s)
+  embed.py format: [ (0.00, 23.20), (47.40, 54.80), (68.70, 125.80), (212.20, None) ]
+
+Version 85: Playtime 117.50s (1m57.50s) (3 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 48.60s (0m48.60s)
+  Jump 2: Play until 59.60s (0m59.60s) -> Skip to 68.70s (1m08.70s)
+  Jump 3: Play until 144.60s (2m24.60s) -> Skip to 231.00s (3m51.00s)
+  embed.py format: [ (0.00, 19.80), (48.60, 59.60), (68.70, 144.60), (231.00, None) ]
+
+Version 86: Playtime 117.50s (1m57.50s) (3 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 48.60s (0m48.60s)
+  Jump 2: Play until 59.60s (0m59.60s) -> Skip to 68.70s (1m08.70s)
+  Jump 3: Play until 135.20s (2m15.20s) -> Skip to 221.60s (3m41.60s)
+  embed.py format: [ (0.00, 19.80), (48.60, 59.60), (68.70, 135.20), (221.60, None) ]
+
+Version 87: Playtime 117.50s (1m57.50s) (3 jumps)
+  Jump 1: Play until 19.80s (0m19.80s) -> Skip to 48.60s (0m48.60s)
+  Jump 2: Play until 59.60s (0m59.60s) -> Skip to 68.70s (1m08.70s)
+  Jump 3: Play until 125.80s (2m05.80s) -> Skip to 212.20s (3m32.20s)
+  embed.py format: [ (0.00, 19.80), (48.60, 59.60), (68.70, 125.80), (212.20, None) ]
+

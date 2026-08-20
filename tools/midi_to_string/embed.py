@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
-"""Embed every .mid file from midis/ into game.js as packed var constants.
-
-For each MIDI file it parses, encodes the full song (M5, original profile),
-compresses it losslessly (deflate) and base64url-encodes it, exactly like the
-browser-side unpack() in game.js expects. The generated block lives in game.js
-between the two markers below; re-running this script replaces it in place.
-"""
+"""Embed every .mid file from midis/ into game.js as packed var constants."""
 
 from __future__ import annotations
 
@@ -26,67 +20,76 @@ END = "/* === /MIDI SONGS === */"
 OLD_LINE = re.compile(r'var MIDI_SONG = "[^"]+";\n')
 
 SONG_LIST = [
-    # (filename, start_second, end_second)
-    # use None for end_second to go until the end
-    ("barranquilla.mid", 0.0, 60.0),
-    ("fruko_y_sus_tesos.mid", 0.0, 60.0),
-    ("loba.mid", 0.0, 60.0),
-    ("nuestra_cancion.mid", 0.0, 60.0),
+    ("barranquilla.mid", [(0.00, 43.20), (100.80, 132.80), (166.40, 182.80), (308.80, None)]),
+    ("fruko_y_sus_tesos.mid", [(0.0, 60.0)]),
+    ("loba.mid", [(1.8, 73.0)]),
+    ("nuestra_cancion.mid", [(2.0, 93.0)]),
 ]
-
 
 def constant_name(path: Path) -> str:
     stem = re.sub(r"[^A-Za-z0-9]+", "_", path.stem).strip("_").upper()
     return "MIDI_SONG_" + stem
 
-
-def pack(path: Path, start_sec: float | None, end_sec: float | None) -> tuple[str, int, int, float]:
-    division, tempos, notes, end_tick = parse_midi(path)
+def pack(path: Path, cuts: list[tuple[float, float | None]]) -> tuple[str, int, int, float]:
+    division, tempos, all_notes, total_end_tick = parse_midi(path)
     
-    start_tick = 0
-    if start_sec:
-        start_tick = tick_at_seconds(tempos, division, start_sec)
-    if end_sec is not None:
-        end_tick = min(end_tick, tick_at_seconds(tempos, division, end_sec))
+    final_notes = []
+    final_tempos = []
+    current_tick_offset = 0
+    
+    for start_sec, end_sec in cuts:
+        start_tick = tick_at_seconds(tempos, division, start_sec) if start_sec else 0
+        end_tick = tick_at_seconds(tempos, division, end_sec) if end_sec is not None else total_end_tick
+        end_tick = min(total_end_tick, end_tick)
         
-    if start_tick > 0 or end_sec is not None:
-        # Filter and shift notes
-        shifted = []
-        for n in notes:
+        if end_tick <= start_tick:
+            continue
+            
+        for n in all_notes:
             if n.end <= start_tick or n.tick >= end_tick:
                 continue
-            new_tick = max(0, n.tick - start_tick)
-            new_end = max(new_tick + 1, min(n.end, end_tick) - start_tick)
-            shifted.append(Note(new_tick, new_end, n.channel, n.pitch, n.velocity))
-        notes = shifted
-        end_tick -= start_tick
-        
-        # Shift tempos
-        shifted_tempos = []
+            new_tick = max(0, n.tick - start_tick) + current_tick_offset
+            new_end = max(new_tick + 1, min(n.end, end_tick) - start_tick + current_tick_offset)
+            final_notes.append(Note(new_tick, new_end, n.channel, n.pitch, n.velocity))
+            
+        cut_tempos = []
+        active_tempo = 500000
         for t_tick, t_val in tempos:
             if t_tick <= start_tick:
-                shifted_tempos = [(0, t_val)]
-            else:
-                if t_tick < end_tick + start_tick:
-                    shifted_tempos.append((t_tick - start_tick, t_val))
-        tempos = shifted_tempos
+                active_tempo = t_val
+            elif t_tick < end_tick:
+                cut_tempos.append((t_tick - start_tick + current_tick_offset, t_val))
+                
+        if not final_tempos or final_tempos[-1][1] != active_tempo or current_tick_offset == 0:
+            final_tempos.append((current_tick_offset, active_tempo))
+            
+        final_tempos.extend(cut_tempos)
+        
+        current_tick_offset += (end_tick - start_tick)
 
-    payload, _, end_tick, _ = encode(
-        division, tempos, notes, end_tick,
+    final_end_tick = current_tick_offset
+    final_notes.sort(key=lambda n: n.tick)
+
+    payload, _, final_end_tick, _ = encode(
+        division, final_tempos, final_notes, final_end_tick,
         no_drums=False, max_seconds=None, profile="original",
         polyphony_limit=None, drop_policy="preserve-bass-melody",
         drop_short_ms=0, min_velocity=0, quantize_ticks=0,
     )
-    compressed = base64.urlsafe_b64encode(zlib.compress(payload.encode(), 9)).decode()
-    seconds = seconds_between(0, end_tick, tempos, division)
-    return compressed, len(compressed), len(notes), seconds
-
+    
+    # Use raw deflate (wbits=-15) for slightly more aggressive compression
+    compressor = zlib.compressobj(level=9, method=zlib.DEFLATED, wbits=-15)
+    compressed_bytes = compressor.compress(payload.encode()) + compressor.flush()
+    compressed = base64.urlsafe_b64encode(compressed_bytes).decode()
+    
+    seconds = seconds_between(0, final_end_tick, final_tempos, division)
+    return compressed, len(compressed), len(final_notes), seconds
 
 def build_block(entries: list[tuple[str, str, int, float]]) -> str:
     lines = [BEGIN]
     lines.append("// Generated automatically - do not edit by hand.")
     lines.append("// Re-run: python tools/midi_to_string/embed.py")
-    lines.append("// Each constant packs one .mid losslessly (M5 -> deflate -> base64url).")
+    lines.append("// Each constant packs one .mid losslessly (M5 -> deflate-raw -> base64url).")
     for name, packed, size, seconds in entries:
         lines.append(f"// {name}: {size} chars base64, about {seconds:.0f}s of music.")
     lines.append("// var MIDI_SONG is the default song played by create(); swap it to any")
@@ -101,7 +104,6 @@ def build_block(entries: list[tuple[str, str, int, float]]) -> str:
     lines.append(END)
     return "\n".join(lines)
 
-
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--midis", type=Path, default=MIDI_DIR, help="directory containing .mid files")
@@ -109,12 +111,15 @@ def main() -> int:
     args = parser.parse_args()
     
     entries = []
-    for filename, start_sec, end_sec in SONG_LIST:
+    for item in SONG_LIST:
+        filename = item[0]
+        cuts = item[1]
+            
         path = args.midis / filename
         if not path.is_file():
             print(f"warning: {path} not found, skipping", file=sys.stderr)
             continue
-        packed, size, note_count, seconds = pack(path, start_sec, end_sec)
+        packed, size, note_count, seconds = pack(path, cuts)
         entries.append((constant_name(path), packed, size, seconds))
         print(f"{path.name}: {note_count} notes -> {size} chars base64 ({seconds:.0f}s)", file=sys.stderr)
 
@@ -134,7 +139,6 @@ def main() -> int:
     args.game_js.write_text(text)
     print(f"wrote {len(entries)} song constant(s) to {args.game_js}", file=sys.stderr)
     return 0
-
 
 if __name__ == "__main__":
     raise SystemExit(main())
