@@ -369,7 +369,7 @@ function create() {
 }
 
 function startMenuMusic() {
-  if (state.v === STATE.BATTLE || state.v === STATE.WIN) return;
+  if (state.v === STATE.BATTLE || state.v === STATE.WIN || state.v === STATE.SONGSEL || state.v === STATE.DIFFSEL) return;
   if (!G.mTxt) return;
   const ctx = G.titL?.scene?.sound?.context;
   if (!ctx) return;
@@ -681,6 +681,7 @@ function drawSongSelScreen(s) {
 }
 
 function drawDiffSelScreen(s) {
+  if (G.pMus) { G.pMus.stop(); G.pMus = null; }
   drawPatternBg(s);
   G.hudL.setVisible(0);
   G.winL.setVisible(0);
@@ -1500,7 +1501,9 @@ function playSongPreview(s, songIdx) {
   G.previewNonce = (G.previewNonce || 0) + 1;
   const nonce = G.previewNonce;
   unpack(SONGS[songIdx].data).then(data => {
-    if (state.v === STATE.SONGSEL && G.sSng === songIdx && !G.pendingStart && G.previewNonce === nonce) {
+    if (state.v !== STATE.SONGSEL) return;
+    if (G.sSng !== songIdx) return;
+    if (G.previewNonce === nonce) {
       const ctx = s.sound.context;
       G.pMus = playMidi(ctx, data);
     }
