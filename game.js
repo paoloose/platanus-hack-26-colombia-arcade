@@ -20,9 +20,9 @@ const MISS_TOL = 50;         // Distance in pixels beyond hit line before a note
 
 // Tug-of-war bar balance & damage/penalty values
 const BAR_MAX = 100;         // Tug-of-war meter limit (+100 = Player 1 wins, -100 = Player 2 wins)
-const DMG_PERFECT = 2.0;     // Bar shift amount awarded on a Perfect hit
-const DMG_GOOD = 1.0;        // Bar shift amount awarded on a Good hit
-const MISS_PEN = 2.5;        // Bar penalty deducted on Miss or empty ghost tap
+const DMG_PERFECT = 1.8;     // Bar shift amount awarded on a Perfect hit
+const DMG_GOOD = 0.75;       // Bar shift amount awarded on a Good hit
+const MISS_PEN = 4.0;        // Bar penalty deducted on Miss or empty ghost tap
 
 // Note travel speed & layout
 const HIT_Y = 518;           // Vertical screen position (Y coordinate in px) of receptor hit line
@@ -150,24 +150,29 @@ function parseCSEF(s, w) {
 
 function sp(sData, w = 24) { return sData ? (Array.isArray(sData) ? sData : parseCSEF(sData, w)) : []; }
 
-function dsp(gfx, sData, x, y, shadow = false) {
-  const h = sData.length, w = sData[0]?.length || 0;
-  const cx = w >> 1, cy = h >> 1;
-  if (shadow) {
-    for (let r = 0; r < h; r++) for (let c = 0; c < sData[r].length; c++) {
-      if (CLR[sData[r][c]] != null) {
-        gfx.fillStyle(0x000, .4);
-        gfx.fillRect(x - cx + c + 0.3, y - cy + r + 0.3, 1, 1);
+function dsp(gfx, sData, x, y, shadow = false, flipX = false, maxRows = null, scale = 1) {
+  if (!sData) return;
+  const h = maxRows ? Mmin(sData.length, maxRows) : sData.length;
+  const w = sData[0]?.length || 0;
+  const cx = w >> 1, cy = (sData.length) >> 1;
+  const draw = (ox, oy, isShadow) => {
+    for (let r = 0; r < h; r++) {
+      for (let c = 0; c < w; c++) {
+        if (CLR[sData[r][c]] != null) {
+          const px = flipX ? w - 1 - c : c;
+          if (isShadow) {
+            gfx.fillStyle(0x000, .4);
+            gfx.fillRect(x + (px - cx) * scale + 0.3, y + (r - cy) * scale + 0.3, scale, scale);
+          } else {
+            gfx.fillStyle(CLR[sData[r][c]], 1);
+            gfx.fillRect(x + (px - cx) * scale + ox, y + (r - cy) * scale + oy, scale, scale);
+          }
+        }
       }
     }
-  }
-  for (let r = 0; r < h; r++) for (let c = 0; c < sData[r].length; c++) {
-    const col = CLR[sData[r][c]];
-    if (col != null) {
-      gfx.fillStyle(col, 1);
-      gfx.fillRect(x - cx + c, y - cy + r, 1, 1);
-    }
-  }
+  };
+  if (shadow) draw(0, 0, true);
+  draw(0, 0, false);
 }
 
 /* === ARROW SPRITE (12x12, chars C=light, F=dark) === */
@@ -194,6 +199,11 @@ const DANCERS = [
     sp('8.1I9.6.7.1I1N1I3U9.2.6.2r1I5U9.1.6.1r1<1r2U3,9.1.6.1[1r2U2,1A1,9.1.5.1[1<1[2{2,1A1,9.1.6.1[2U1<4,4.2,4.8.1U1{3,4.3,1G3.9.1{1,1[4.2,1<1r1[1G2.6.2G3[2G2.2,1.1<1r1[1G2.5.8G3,2.1<1r1[1G2.5.3,5G2,3.1<1r1[1G2.4.2,2.4E2G3.2<1r1[1G2.4.2,3.1E5G1.2<1r1[2G2.3.1<3,8G2<1r1[1G4.2.1G2r3<6G2<1r2[1G4.2.1G2[2r2<4G2<1r2[1G5.2.2G2[2r6<2r1[1G6.3.2G2[7r2[1G7.4.3G8[2G7.5.9G1G9.7.2,3.2,9.1.7.2,3.1,1{9.1.7.3,2.3,9.', 24),
     sp('~~8.1I9.6.7.1I1N1I9.5.6.2r1I4U9.2.6.1r1<1r5U9.1.6.1[1r2U4,9.1.5.1[1<1[1U1,1A1,1A1,9.1.6.1[2U1,1A1,1A1,9.1.8.1<5,1<9.9.1[3,1[9.1.7.2G5[2G4,4.6.9G1G6,2.6.1{2,4G1E5.1<3,1.7.3,3E5G1<2r1G2.5.1r1<1G3,5G2<2r1[1G2.4.2r2<1G3,3G2<2r1[2G2.3.1G1[2r3<2{1G3<2r1[2G3.3.1G2[3r5<3r2[1G4.3.2G3[7r3[1G5.4.3G9[2G6.5.1,9G1G8.4.4,4.2,9.1.3.3,6.3,9.', 24),
   ]],
+  ['Rolo con ruana', [
+    sp('9.1.2A>9.1A2U>^7.5A>7.5U>9.2U1{1A1{1A9.9.1U5{9.9.1.2{2G1{9.9.2.1{>9.1}1f3N1f2}7.8.2}2f1N2f2}1T6.7.2T2}1f1N1f2}2T6.7.2T2}1f1N1f1}1T1M1;6.6.2;2T1}2f3M2;6.6.3;1T2}1f2{2;7.5.2{1;1.2T1}1f2{1;8.4.1[2{2.2T1}1f2}1T8.3.1[1x1<3.2T1}1f2}1T8.3.1[1x1<3.2T1}2B1}1T8.4.1x4.2T1B2C1B1T8.9.1.1B1C1B2C9.9.1.3C1B2C8.9.1.3C1.2C8.9.1.2L3.3L6.', 24),
+    sp('~9.1.2A>9.1A2U>3.2<4.1A4U1A9.2.2x2<1.9A1A7.1.3[2{1.9U1U7.4.1{1;3.2U1{1A1{1A9.5.2;2.1U5{9.5.2;3.2{2G1{9.6.3;1}1f2{1N1f2}7.7.1;1}2f2N2f2}1T1.2;2{1.7.2T1f2N2f2}1T4;2{1.7.1}1T4f2}2T2;5.6.2}1T3f3}1T8.5.2}1T3f3}2C8.4.3}1T1f2T1}1T4C4.1L2.5.1}2T1f1T9C1.2L2.6.1T2f1T5C1B1.3C2L2.7.1f2T3C2B1C2.2C2L2.9.2T2.3C8.9.5.2C8.^9.5.2L8.9.5.4L6.', 24),
+    sp('9.1.5A9.9.1A5U1A8.2.2[5.1A5U1A8.1.3x1[3.9A1A6.1.1x1<2{3.9U1U3.2{1.2.1<2{1;3.1U1{1A1{1A1{1U4.2{2.4.2;3.1U5{1U4.2;2.5.2;1}2.1{2G2{4.2;3.5.2;3}1.2{3.2}3;3.6.2T2}1f3N1f3}2;4.7.1T2}2f1N2f2}1T6.7.2T2}1f1N1f2}2T6.8.1T2}1f1N1f1}3T6.8.2T1}3f1}3T6.8.2T2}1f2}2T7.8.3T1}1f2}1T8.7.4T1}1f2}1T8.6.5T1}1f2}2T7.6.5T1}1f2}3T6.5.6T1}1f2}3T6.5.1T2.5B2C2B1T6.7.3C3T1B3C7.7.3C2.>6.4L5.3L6.', 24),
+  ]],
   ['La Palenquera', [
     sp('8.2X4.1X2.1X6.9.1X1?1<1?3]2Y6.8.1X1.1<1?1<1?3]2c1X4.9.1.1?1<1?1<3]3c4.9.1.9{5.9.2.7{6.9.3.5[7.9.2.1[1<5[6.9.1.1[1<1r1[1M2J1[6.9.1.1[1<1r1M4J6.9.2.1<1r1M1A2J1A6.9.2.2r2J2]1J6.9.3.1M5J6.9.1.2<1.2J2.2<5.9.1J2r6<1r1J4.7.3J2[6r3J3.6.3J3.5[2.2J3.4.3J5.5<2.2J3.3.1G2[6.5<1.3J3.4.1G3[2r8<2J4.4.2G3[2r1<5r1<1r5.5.2G3[1r1<5r1<2[4.6.2G4[5<2[1G4.5.2J3G8[1G5.4.4J1.9G6.4.2J9.2J7.5.1J9.2J7.9.6.3J6.', 24),
     sp('~~~8.2X4.1X2.1X6.9.1X1?1<1?3]2Y6.8.1X1.1<1?1<1?3]2c1X4.9.1.1?1<1?1<3]3c4.9.1.9{5.9.2.7{6.9.3.5[7.9.2.1[1<5[6.9.1.1[1<1r1[1M2J1[6.9.1.1[1<1r1M4J4.1X1.9.2.1<1r1M1A2J1A3.3]9.2.2r2J2]1J3.3]9.3.1M5J4.2J4.2[2.2J2<1.2J2.2<2.2J1.3.1G1[1.4J2r6<1r1J1.2J1.3.1G1[3J2.2[6r5J1.3.1G2[6.5[2.3J2.3.1G2[6.5<7.4.1G2[3r8<6.4.2G2[3r1<5r1<1r5.5.2G3[1r1<5r1<2[4.6.2G4[5<2[1G4.7.3G8[1G1J4.9.9G3J3.9.1.3J6.3J2.', 24),
@@ -204,11 +214,6 @@ const DANCERS = [
     sp('7.7o1.3r6.5.1r3&1o3&1o5r5.4.2r1&2B1Y2B1&1o5r5.3.3r1&2B1Y2B1&1o5r5.3.3r3&1Y3&1o5r5.3.4r2o1Y4o5r5.4.3r1o1<1Y3<1o4r6.7.1o1N1Y3N1o9.1.8.1o1Y3o9.2.7.1G1c1Y2r2c2G8.6.2G1c3r2c3G7.5.3G1c1G1r1G2c3G7.4.3G1.1c2{6G7.4.2G2.1c2{5E8.4.1G2{1.1c1G1r1G2c9.1.5.2{1.1<3G2<9.1.8.2<1c1<1c1<9.1.8.1c5<9.1.9.1c1<1c1<2J1<2Y6.9.1.2<2J1c1<2Y6.9.1.2<5.1Y6.9.1<1c9.4.9.2Y9.4.8.3Y9.4.', 24),
     sp('~~~5.3r9.3r4.4.5r7o5r3.^4.5r3&1o3&5r3.4.5r1&2B1Y2B1&5r3.^5.4r3&1Y3&4r4.9.1o2<1Y2<1o8.9.1o2N1Y2N1o8.6.3G1c2o1Y2o1c3G5.5.4G2c1r1Y1r2c4G4.4.3G2.2c1G1r1G2c2.3G3.4.2G3.2c1G1r1G2c3.2G3.4.2{3.2c1G1r1G2c3.2{3.4.2{2.2<1c1G1r1G1c2<2.2{3.6.1<1c4<1G2<1c3<1c4.6.3<1c1<1c1<1c3<1c2<4.6.1c2<8.1<1c5.6.2<1c8.1c1<5.7.2Y8.2Y5.6.3Y8.3Y4.', 24),
     sp('6.3r1.7o2r5.5.5r1o3&1o3&2r4.5.5r1o1&2B1Y2B1&2r4.^5.5r1o3&1Y3&2r4.5.5r4o1Y2o3r4.6.4r1o3<1Y1<1o2r5.9.1.1o3N1Y1N1o7.9.2.3o1Y1o8.8.2G2c2r1Y1c1G7.7.3G2c3r1c1G7.7.2G1.2c1G1r1G1c1G7.^7.2G1.2c1G1r1G1c2G6.7.3G1{1c1G1r1G1c2G1{5.8.1G2{1<3G1<1.2{5.9.1.1<1c1<1c2<8.6.1Y1c1<1.5<1c8.6.1Y3<1c1<1c1<1c1<8.6.2Y1c2<1c1<1.3<7.6.1Y2.1<1c2<2.1c1<7.9.6.1<1c7.9.6.2Y7.9.6.3Y6.', 24),
-  ]],
-  ['Rolo con ruana', [
-    sp('9.1.2A>9.1A2U>^7.5A>7.5U>9.2U1{1A1{1A9.9.1U5{9.9.1.2{2G1{9.9.2.1{>9.1}1f3N1f2}7.8.2}2f1N2f2}1T6.7.2T2}1f1N1f2}2T6.7.2T2}1f1N1f1}1T1M1;6.6.2;2T1}2f3M2;6.6.3;1T2}1f2{2;7.5.2{1;1.2T1}1f2{1;8.4.1[2{2.2T1}1f2}1T8.3.1[1x1<3.2T1}1f2}1T8.3.1[1x1<3.2T1}2B1}1T8.4.1x4.2T1B2C1B1T8.9.1.1B1C1B2C9.9.1.3C1B2C8.9.1.3C1.2C8.9.1.2L3.3L6.', 24),
-    sp('~9.1.2A>9.1A2U>3.2<4.1A4U1A9.2.2x2<1.9A1A7.1.3[2{1.9U1U7.4.1{1;3.2U1{1A1{1A9.5.2;2.1U5{9.5.2;3.2{2G1{9.6.3;1}1f2{1N1f2}7.7.1;1}2f2N2f2}1T1.2;2{1.7.2T1f2N2f2}1T4;2{1.7.1}1T4f2}2T2;5.6.2}1T3f3}1T8.5.2}1T3f3}2C8.4.3}1T1f2T1}1T4C4.1L2.5.1}2T1f1T9C1.2L2.6.1T2f1T5C1B1.3C2L2.7.1f2T3C2B1C2.2C2L2.9.2T2.3C8.9.5.2C8.^9.5.2L8.9.5.4L6.', 24),
-    sp('9.1.5A9.9.1A5U1A8.2.2[5.1A5U1A8.1.3x1[3.9A1A6.1.1x1<2{3.9U1U3.2{1.2.1<2{1;3.1U1{1A1{1A1{1U4.2{2.4.2;3.1U5{1U4.2;2.5.2;1}2.1{2G2{4.2;3.5.2;3}1.2{3.2}3;3.6.2T2}1f3N1f3}2;4.7.1T2}2f1N2f2}1T6.7.2T2}1f1N1f2}2T6.8.1T2}1f1N1f1}3T6.8.2T1}3f1}3T6.8.2T2}1f2}2T7.8.3T1}1f2}1T8.7.4T1}1f2}1T8.6.5T1}1f2}2T7.6.5T1}1f2}3T6.5.6T1}1f2}3T6.5.1T2.5B2C2B1T6.7.3C3T1B3C7.7.3C2.>6.4L5.3L6.', 24),
   ]],
 ];
 
@@ -267,6 +272,11 @@ function updateStagePlayer(idx, fighterIdx, isInstant = 0) {
   G.cSel[idx].cursor = fighterIdx;
   const f = DANCERS[fighterIdx];
   const p = players[idx];
+
+  const tx = idx === 0 ? G.p1Tx : G.p2Tx;
+  if (tx && !G.cSel[idx].ok) {
+    tx.setText(f[0]);
+  }
 
   if (isInstant || !G.titL?.scene) {
     p.name = f[0];
@@ -500,24 +510,29 @@ function drawTugGfx() {
   if (!g) return;
   G.barVis += (G.bar - G.barVis) * 0.12;
   g.clear();
-  const bx = 200, by = 18, bw = 400, bh = 20;
+
+  const diff = Mabs(G.bar - G.barVis);
+  const shake = Mmax(0, diff - 2) * 0.6;
+  const sx = shake > 0 ? (Mrnd() - 0.5) * shake : 0;
+  const sy = shake > 0 ? (Mrnd() - 0.5) * shake : 0;
+
+  const bx = 200 + sx, by = 18 + sy, bw = 400, bh = 32; // Thicker bar
+
   // Thick pixel border (NES style)
   fRect(g, 0x000, 1, bx - 8, by - 8, bw + 16, bh + 16);
   fRect(g, 0x2a2a3a, 1, bx - 4, by - 4, bw + 8, bh + 8);
   // Bar background
   fRect(g, 0x0a0a14, 1, bx, by, bw, bh);
-  // Left half P1, right half P2
-  fRect(g, C.p1H, 0.3, bx, by, bw / 2, bh);
-  fRect(g, C.p2H, 0.3, bx + bw / 2, by, bw / 2, bh);
-  // Center divider
-  fRect(g, 0xfff, 0.5, bx + bw / 2 - 1, by - 4, 2, bh + 8);
-  // Pixel marker
+
+  // Dynamic color split based on marker
   const mx = Mround(bx + ((G.barVis + BAR_MAX) / (2 * BAR_MAX)) * bw);
-  const danger = Mabs(G.barVis) > 80;
-  const mc = G.barVis >= 0 ? C.p1H : C.p2H;
-  fRect(g, 0x000, 1, mx - 8, by - 4, 16, bh + 8);
-  fRect(g, danger && (state.t >> 4 & 1) ? C.miss : mc, 1, mx - 6, by - 2, 12, bh + 4);
-  fRect(g, 0xfff, 1, mx - 4, by, 4, 3);
+  const fillW = mx - bx;
+  fRect(g, C.p1H, 1.0, bx, by, fillW, bh);
+  fRect(g, C.p2H, 1.0, mx, by, bw - fillW, bh);
+
+  // Draw sprite busts pushing each other (scaled x4, 8 rows = 32px height)
+  if (players[0]?.sprites) dsp(g, players[0].sprites[0], mx - 30, by + 48, true, false, 8, 4);
+  if (players[1]?.sprites) dsp(g, players[1].sprites[0], mx + 30, by + 48, true, true, 8, 4);
 }
 
 function drawArrowGfx(s) {
@@ -599,28 +614,39 @@ function updateTitleMode(s) {
 }
 
 function drawPatternBg(s) {
-  if (G.menuBgGraphics) G.menuBgGraphics.destroy();
+  if (G.menuBgGraphics) {
+    s.tweens.killTweensOf(G.menuBgGraphics);
+    G.menuBgGraphics.destroy();
+  }
   const bg = s.add.graphics();
   G.menuBgGraphics = bg;
 
-  // Left half (Yellowish)
-  bg.fillStyle(0xF9E076, 1);
-  bg.fillRect(0, 0, W / 2 + 50, H);
-  // Right half (Dark purplish)
-  bg.fillStyle(0x3B2E5A, 1);
-  bg.fillRect(W / 2 + 50, 0, W / 2 - 50, H);
+  // Colombian FNF Vibe: Base is pure black for max contrast
+  bg.fillStyle(0x000000, 1);
+  bg.fillRect(-120, -120, W + 240, H + 240);
 
-  for (let y = 0; y < H; y += 20) {
-    for (let x = 0; x < W; x += 20) {
-      if ((x + y) % 40 === 0) {
-        bg.fillStyle(x < W / 2 + 50 ? 0xDFB64F : 0x1F1635, 1);
-        bg.fillRect(x, y, 4, 4);
-      }
+  // Diagonal bold stripes in Colombian colors (Yellow, Blue, Red)
+  const colors = [0xFFD166, 0x118AB2, 0xEF476F];
+
+  for (let y = -120; y < H + 240; y += 120) {
+    for (let x = -120; x < W + 240; x += 120) {
+      bg.lineStyle(10, colors[((x + y) / 120) % 3], 0.08); // Extremely low opacity
+      bg.strokeCircle(x, y, 40);
+      bg.strokeCircle(x, y, 80);
     }
   }
 
   G.wrldL.add(bg);
   G.wrldL.sendToBack(bg);
+
+  s.tweens.add({
+    targets: bg,
+    x: -120,
+    y: -120,
+    duration: 3000,
+    ease: 'Linear',
+    repeat: -1
+  });
 }
 
 function drawCharSelScreen(s) {
@@ -633,20 +659,17 @@ function drawCharSelScreen(s) {
 
   G.charSelGfx = s.add.graphics();
   G.titL.add(G.charSelGfx);
-  G.cSTxt = [];
   G.cSSpr = [];
 
   for (let i = 0; i < DANCERS.length; i++) {
-    const tx = cTxt(s, 0, 0, DANCERS[i][0], 14, '#fff', 1);
     const sg = s.add.graphics();
     dsp(sg, DANCERS[i][1][0], 0, 0, 1);
     sg.setScale(3.5);
-    G.titL.add([sg, tx]);
+    G.titL.add(sg);
     G.cSSpr.push(sg);
-    G.cSTxt.push(tx);
   }
-  G.p1Tx = cTxt(s, W / 4, 150, G.mode === '1p' ? 'RIVAL (CPU)' : 'JUGADOR 1', 20, '#ff5577', 1).setStroke('#000', 4);
-  G.p2Tx = cTxt(s, W * 3 / 4, 150, 'JUGADOR 2', 20, '#77dd55', 1).setStroke('#000', 4);
+  G.p1Tx = cTxt(s, 157, 530, DANCERS[G.cSel[0].cursor][0], 28, '#ff5577', 1).setStroke('#000', 5);
+  G.p2Tx = cTxt(s, 643, 530, DANCERS[G.cSel[1].cursor][0], 28, '#77dd55', 1).setStroke('#000', 5);
   G.titL.add([G.p1Tx, G.p2Tx]);
 }
 
@@ -663,7 +686,7 @@ function drawSongSelScreen(s) {
   if (G.stageGfx) G.stageGfx.setVisible(0);
   if (G.floorGfx) G.floorGfx.setVisible(0);
 
-  const title = cTxt(s, W/2, 60, 'SELECCIONA UNA CANCIÓN', 28, '#fff', 1);
+  const title = cTxt(s, W/2, 100, '🎶 SELECCIONA UNA CANCIÓN 🎶', 28, '#e7e7e7', 1);
   G.titL.add(title);
 
   G.sLItm = [];
@@ -695,7 +718,7 @@ function drawDiffSelScreen(s) {
   G.dLGfx = s.add.graphics();
   G.titL.add(G.dLGfx);
 
-  const diffTxts = ['FÁCIL', 'MEDIO', 'DIFÍCIL'];
+  const diffTxts = ['FÁCIL 🐥', 'NORMAL ✌️', 'DIFÍCIL 🌶️'];
   for (let i = 0; i < diffTxts.length; i++) {
     const txt = cTxt(s, 0, 0, diffTxts[i], 22, '#fff', 1);
     G.titL.add(txt);
@@ -705,20 +728,29 @@ function drawDiffSelScreen(s) {
 
 function showWinScreen(winner) {
   G.hudL.setVisible(0);
-  G.titL.setVisible(0);
   G.winL.removeAll(1);
   G.winL.setVisible(1);
 
   const s = G.titL.scene;
-  const bg = s.add.rectangle(W / 2, H / 2, W, H, 0x000, 0.65);
   const col = winner === 0 ? '#ff5577' : '#77dd55';
-  const t1 = cTxt(s, W / 2, H / 2 - 90, '¡K.O.!', 68, '#fff200', 1).setStroke('#000', 6);
-  const t2 = cTxt(s, W / 2, H / 2 - 20, `${players[winner].name} GANA LA RUMBA`, 28, col, 1).setStroke('#000', 4);
-  const w = players[winner];
-  const t3 = cTxt(s, W / 2, H / 2 + 35, `PERFECT: ${w.perfect}   GOOD: ${w.good}   MISS: ${w.miss}`, 16, '#fff', 1).setStroke('#000', 3);
-  const t4 = cTxt(s, W / 2, H / 2 + 90, 'PRESIONA START PARA VOLVER', 20, '#ffd166', 1).setStroke('#000', 4);
+  const t2 = cTxt(s, W / 2, -50, `${players[winner].name} GANÓ LA RUMBA`, 42, col, 1).setStroke('#000', 6);
+  s.tweens.add({
+    targets: t2,
+    y: 80,
+    duration: 1000,
+    ease: 'Bounce.easeOut'
+  });
 
-  G.winL.add([bg, t1, t2, t3, t4]);
+  const boxH = 120;
+  const bg = s.add.rectangle(W / 2, H - boxH / 2, W, boxH, 0x000, 0.8);
+
+  const w = players[winner];
+  const t3 = cTxt(s, W / 2, H - boxH / 2 - 10, `PERFECTO: ${w.perfect}   BIEN: ${w.good}   FALLO: ${w.miss}\nPUNTUACIÓN: ${w.score}`, 20, '#fff', 1).setStroke('#000', 4).setAlign('center');
+
+  const t4 = cTxt(s, W / 2, H - 30, 'PRESIONA START PARA VOLVER', 20, '#ffd166', 1).setStroke('#000', 4);
+  t4.setAlpha(0);
+
+  G.winL.add([bg, t2, t3, t4]);
   G.winText = t4;
 }
 
@@ -832,7 +864,6 @@ function startMusic() {
 }
 
 function endBattle() {
-  if (G.music) { G.music.stop(); G.music = null; }
   if (G.cntL) { G.cntL.destroy(); G.cntL = null; }
   let w;
   if (G.bar >= BAR_MAX) w = 0;
@@ -840,11 +871,13 @@ function endBattle() {
   else w = G.bar > 0 ? 0 : 1;
   state.v = STATE.WIN;
   state.winner = w;
+  state.winT = 0;
   for (const p of players) {
     if (p.notes) {
       for (const n of p.notes) { if (n.gfx) { n.gfx.destroy(); n.gfx = null; } }
     }
     p.notes = [];
+    if (p.cmbT) { p.cmbT.destroy(); p.cmbT = null; }
   }
   G.hudL.setVisible(0);
   clearInputs();
@@ -933,30 +966,24 @@ function update(time, delta) {
   if (state.v === STATE.SPLASH) {
     if (state.t > 2000 && !G.splashFading) {
       G.splashFading = 1;
-      drawTitleScreen(s); // Draw title screen so it's under the splash screen during fade out
       s.tweens.add({
-        targets: G.splL,
+        targets: G.splL.list[1], // Text
         alpha: 0,
-        duration: 1000,
+        duration: 800,
         onComplete: () => {
-          state.v = STATE.TITLE;
-          state.t = 0;
-          G.splL.setVisible(0);
+          drawTitleScreen(s); // Draws under the black background
+          s.tweens.add({
+            targets: G.splL.list[0], // Black background
+            alpha: 0,
+            duration: 800,
+            onComplete: () => {
+              G.splL.setVisible(0);
+              state.v = STATE.TITLE;
+              state.t = 0;
+            }
+          });
         }
       });
-    }
-    // Also animate dancers during the fade out
-    if (G.splashFading && G.tDnc) {
-      const DANCE_INTERVAL = 400;
-      for (const d of G.tDnc) {
-        d.timer += delta;
-        if (d.timer >= DANCE_INTERVAL) {
-          d.timer -= DANCE_INTERVAL;
-          d.pIdx = (d.pIdx + 1) % d.sprites.length;
-          d.gfx.clear();
-          dsp(d.gfx, d.sprites[d.pIdx], 0, 0, true);
-        }
-      }
     }
   } else if (state.v === STATE.TITLE) {
     if (justPressed.P1_U || justPressed.P1_D || justPressed.P2_U || justPressed.P2_D) {
@@ -1054,10 +1081,7 @@ function update(time, delta) {
         }
 
         if (G.cSSpr[i]) {
-          G.cSSpr[i].setPosition(sx, sy - 15);
-        }
-        if (G.cSTxt[i]) {
-          G.cSTxt[i].setPosition(sx, sy + 40).setColor(isP1 || isP2 ? '#fff' : '#888');
+          G.cSSpr[i].setPosition(sx, sy);
         }
       }
     }
@@ -1085,24 +1109,25 @@ function update(time, delta) {
         return; // Prevent running the rest of the block on destroyed objects
       }
     }
+
     if (G.sLGfx && G.sLItm) {
       const g = G.sLGfx; g.clear();
       for (let i = 0; i < SONGS.length; i++) {
         const isSel = i === G.sSng;
-        const sy = 140 + i * 80;
-        const sx = 625;
+        const sy = 200 + i * 80;
+        const sx = 600;
 
-        g.fillStyle(isSel ? 0xFFD166 : 0x2A1F45, 1);
+        g.fillStyle(isSel ? 0xFFD166 : 0x111111, 1);
         if (isSel) g.lineStyle(4, 0xffffff, 1);
-        else g.lineStyle(2, 0x4A3B69, 1);
-        g.fillRoundedRect(sx - 160, sy - 30, 320, 60, 10);
-        g.strokeRoundedRect(sx - 160, sy - 30, 320, 60, 10);
+        else g.lineStyle(2, 0x555555, 1);
+        g.fillRoundedRect(sx - 160, sy - 30, 320, 60, 2);
+        g.strokeRoundedRect(sx - 160, sy - 30, 320, 60, 2);
 
         const t = G.sLItm[i];
         if (t.isSel !== isSel) {
           t.isSel = isSel;
-          t.name.setColor(isSel ? '#1F1635' : '#b3a7cc').setStroke(isSel ? '#1F1635' : '#000', isSel ? 0 : 2);
-          t.meta.setColor(isSel ? '#4A3B69' : '#7a6a99');
+          t.name.setColor(isSel ? '#000000' : '#ffffff').setStroke('#000', isSel ? 0 : 2);
+          t.meta.setColor(isSel ? '#333333' : '#aaaaaa');
         }
         t.name.setPosition(sx, sy - 10);
         t.meta.setPosition(sx, sy + 15);
@@ -1137,19 +1162,19 @@ function update(time, delta) {
       const g = G.dLGfx; g.clear();
       for (let i = 0; i < 3; i++) {
         const isSel = i === G.diff;
-        const sy = 180 + i * 80;
-        const sx = 625;
+        const sy = 220 + i * 80;
+        const sx = 600;
 
-        g.fillStyle(isSel ? 0xFFD166 : 0x2A1F45, 1);
+        g.fillStyle(isSel ? 0xFFD166 : 0x111111, 1);
         if (isSel) g.lineStyle(4, 0xffffff, 1);
-        else g.lineStyle(2, 0x4A3B69, 1);
-        g.fillRoundedRect(sx - 120, sy - 30, 240, 60, 10);
-        g.strokeRoundedRect(sx - 120, sy - 30, 240, 60, 10);
+        else g.lineStyle(2, 0x555555, 1);
+        g.fillRoundedRect(sx - 120, sy - 30, 240, 60, 2);
+        g.strokeRoundedRect(sx - 120, sy - 30, 240, 60, 2);
 
         const t = G.dLItm[i];
         if (t.isSel !== isSel) {
           t.isSel = isSel;
-          t.setColor(isSel ? '#1F1635' : '#b3a7cc').setStroke(isSel ? '#1F1635' : '#000', isSel ? 0 : 2);
+          t.setColor(isSel ? '#000000' : '#ffffff').setStroke('#000', isSel ? 0 : 2);
         }
         t.setPosition(sx, sy);
       }
@@ -1157,10 +1182,23 @@ function update(time, delta) {
   } else if (state.v === STATE.BATTLE) {
     updateBattle(delta);
   } else if (state.v === STATE.WIN) {
-    if (G.winText && G.winText.active) {
-      G.winText.setScale(1 + Msin(state.t * 0.005) * 0.08);
+    state.winT += delta;
+    if (state.winT >= 5000 && G.winText && G.winText.alpha === 0) {
+      G.winText.setAlpha(1);
     }
-    if (justPressed.START1 || justPressed.START2 || justPressed.P1_1 || justPressed.P2_1) {
+    if (G.winText && G.winText.alpha > 0) {
+      G.winText.setVisible(state.t % 800 < 400); // blinking
+    }
+
+    if (G.sLen && getSongTime() >= G.sLen) {
+      if (G.music) { G.music.stop(); G.music = null; }
+      const skip = 40 + Mrnd() * 20; // 40-60s
+      G.audS = G.titL.scene.sound.context.currentTime - skip;
+      G.music = playMidi(G.titL.scene.sound.context, G.midiText, () => {}, skip);
+    }
+
+    if (state.winT >= 5000 && (justPressed.START1 || justPressed.START2 || justPressed.P1_1 || justPressed.P2_1)) {
+      if (G.music) { G.music.stop(); G.music = null; }
       state.v = STATE.TITLE;
       drawTitleScreen(s);
       startMenuMusic();
@@ -1209,14 +1247,27 @@ function animateCharacters(delta) {
       if (p.slideOffset > 0) p.slideOffset = Mmax(0, p.slideOffset - delta * 2.5);
     }
 
-    if ((state.v === STATE.CHARSEL || state.v === STATE.SONGSEL || state.v === STATE.DIFFSEL) && !p.slOut && p.sprites.length > 0) {
+    if ((state.v === STATE.CHARSEL || state.v === STATE.SONGSEL || state.v === STATE.DIFFSEL || (state.v === STATE.WIN && i === state.winner)) && !p.slOut && p.sprites.length > 0) {
       p.danceTimer = (p.danceTimer || 0) + delta;
-      const danceInterval = state.v === STATE.CHARSEL ? 600 : 400;
+      const danceInterval = state.v === STATE.CHARSEL ? 600 : (state.v === STATE.WIN ? 350 : 400);
       if (p.danceTimer >= danceInterval) {
         p.danceTimer -= danceInterval;
         p.pIdx = (p.pIdx + 1) % p.sprites.length;
         if (g) { g.clear(); dsp(g, p.sprites[p.pIdx], 0, 0, true); }
       }
+    }
+
+    if (state.v === STATE.BATTLE && p.combo > 4) {
+      p.cmbScale = Mmax(1, (p.cmbScale || 1) - delta * 0.003);
+      if (!p.cmbT) {
+        p.cmbT = cTxt(g.scene, p.center.x, 260, p.combo + '\nCOMBO', 42, '#FFD166', 1).setStroke('#EF476F', 8).setAlign('center');
+        G.fxL.add(p.cmbT);
+      } else {
+        p.cmbT.setText(p.combo + '\nCOMBO').setScale(p.cmbScale).setPosition(p.center.x, 260 + Msin(state.t * 0.01) * 8);
+      }
+    } else if (p.cmbT) {
+      p.cmbT.destroy();
+      p.cmbT = null;
     }
 
     let cx = p.center.x, cy = p.center.y;
@@ -1280,9 +1331,9 @@ function updateCamera() {
     ty = 330;
     tz = 1.05;
   } else if (state.v === STATE.WIN) {
-    tx = state.winner === 0 ? 250 : 550;
-    ty = 320;
-    tz = 1.18;
+    tx = state.winner === 0 ? 300 : 500;
+    ty = 350;
+    tz = 1.35;
   }
   G.camX += (tx - G.camX) * .07;
   G.camY += (ty - G.camY) * .07;
@@ -1427,7 +1478,7 @@ function tryHit(pi, dir, songT) {
       showJudgment(G.titL.scene, pi, dir, 'BIEN');
     }
     p.combo++;
-    if (p.cTxt) p.cTxt.setText(p.combo > 1 ? p.combo + ' COMBO' : '');
+    p.cmbScale = 1.6;
     G.bar = clamp(G.bar + (pi === 0 ? dmg : -dmg), -BAR_MAX, BAR_MAX);
     triggerDancePose(pi, dir);
   } else {
@@ -1440,7 +1491,6 @@ function onMiss(pi, dir) {
   const p = players[pi];
   p.miss++;
   p.combo = 0;
-  if (p.cTxt) p.cTxt.setText('');
   G.bar = clamp(G.bar + (pi === 0 ? -MISS_PEN : MISS_PEN), -BAR_MAX, BAR_MAX);
   showJudgment(G.titL.scene, pi, dir ?? 1, 'FALLO');
   playSynth(150, 40, [.15, .2], [.2, .001], [.2]);
@@ -1665,7 +1715,7 @@ function playNote(ctx, buffer, master, channel, note, time, length) {
   } else oscillator(ctx, 'triangle', frequency, filter, time, finish);
 }
 
-function playMidi(ctx, data, onEnd = () => {}) {
+function playMidi(ctx, data, onEnd = () => {}, skipTime = 0) {
   let song;
   try { song = decode(data); } catch (error) { console.error(error); onEnd(0); return; }
   if (!ctx) { onEnd(0); return; }
@@ -1690,12 +1740,13 @@ function playMidi(ctx, data, onEnd = () => {}) {
     const channels = Array.from({ length: 16 }, (_, number) => ({ program: PROGRAM[number] || 0, volume: 100, pan: 64, expression: 127, bend: 8192 }));
     const base = ctx.currentTime + .08, buffer = noise(ctx), lookAhead = 2, interval = 80;
     let cursor = 0;
+    while(cursor < notes.length && notes[cursor].at < skipTime) cursor++;
     const end = Mmax(secondsAt(song.endTick, tempos, song.division), ...notes.map(note => note.at + note.length));
     const pump = () => {
-      const limit = ctx.currentTime - base + lookAhead;
+      const limit = ctx.currentTime - base + lookAhead + skipTime;
       while (cursor < notes.length && notes[cursor].at <= limit) {
         const note = notes[cursor++];
-        playNote(ctx, buffer, master, channels[note.event.channel], note.event, base + note.at, note.length);
+        playNote(ctx, buffer, master, channels[note.event.channel], note.event, base + note.at - skipTime, note.length);
       }
       if (cursor === notes.length) clearInterval(timer);
     };
