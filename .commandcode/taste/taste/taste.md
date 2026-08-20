@@ -16,3 +16,4 @@
 - Drives any timing that must stay in sync with audio from the AudioContext clock (`ctx.currentTime`) as the single source of truth, never from an rAF delta accumulator. Confidence: 0.9
 - Wants game state and audio to freeze/resume together when unfocused so arrows and song events never drift out of time. Confidence: 0.85
 - Wants sound effects / audio feedback for player events in games, using game-like cues (e.g., a damage-like buzz) rather than silent state changes. Confidence: 0.75
+- Prefers an analysis-first workflow: requests a full audit of current state (features, tech, status, weak points) and then personally directs which improvements to make, rather than the assistant proactively implementing changes. Confidence: 0.7

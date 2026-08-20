@@ -210,9 +210,9 @@ const DANCERS = [
     sp('5.2X4.1X2.1X9.6.1X1?1<1?3]2Y9.5.1X1.1<1?1<1?3]2c1X7.7.1?1<1?1<3]3c7.7.9{8.8.7{9.9.5[9.1.8.1[1<3[1<9.1.7.1[2<1M3J1<9.7.1[1<1M4J1<9.8.1<1J1A2J1A9.1.8.1r2J2]1J9.1.9.1M4J9.1.7.2<1.2J2.2<8.1.1J2.3J2r6<1r2J6.1.6J2[6r6J3.1G2[1<5.5[5.3J2.1G1[2r2<3.1?5<6.1<2.1G2[2r2<3?9<2r1[2.1.1G2[2r9<1<4r1[1G2.1.2G2[3r1<5r1<3r2[2G2.2.2G2[2r1<5r1<2r2[2G3.3.2G4[5<3[3G4.4.3G8[3G6.6.9G1G8.8.2J2.2J9.1.7.3J2.2J9.1.7.3J2.3J9.', 24),
   ]],
   ['Marimonda', [
-    sp('4.3r1.7o1.3r5.3.5r3&1o3&5r4.3.5r1&2B1Y2B1&5r4.^3.5r3&1Y3&5r1.2{1.3.5r3o1Y3o5r1.2{1.4.4r1o2<1Y2<1o4r2.2G1.8.1o2N1Y2N1o4.3G2.9.2o1Y2o3.5G2.8.2c1r1Y1r2c5G4.7.1G2c3r2c4G5.5.3G2c1G1r1G2c9.4.3G1.2c1G1r1G2c9.3.3G2.2c1G1r1G2c9.3.2G3.2c1G1r1G1c1<1c8.2.3G4.1<2G2<1c1<8.1.2{1G5.1<1c1<1c3<1c7.1.2{5.1c2<3.1c2<7.8.1<1c4.1<1c8.8.2<4.1c1<8.8.1c2<3.2Y8.8.2<1c3.3Y7.9.2Y9.4.8.3Y9.4.', 24),
     sp('7.7o1.3r6.5.1r3&1o3&1o5r5.4.2r1&2B1Y2B1&1o5r5.3.3r1&2B1Y2B1&1o5r5.3.3r3&1Y3&1o5r5.3.4r2o1Y4o5r5.4.3r1o1<1Y3<1o4r6.7.1o1N1Y3N1o9.1.8.1o1Y3o9.2.7.1G1c1Y2r2c2G8.6.2G1c3r2c3G7.5.3G1c1G1r1G2c3G7.4.3G1.1c2{6G7.4.2G2.1c2{5E8.4.1G2{1.1c1G1r1G2c9.1.5.2{1.1<3G2<9.1.8.2<1c1<1c1<9.1.8.1c5<9.1.9.1c1<1c1<2J1<2Y6.9.1.2<2J1c1<2Y6.9.1.2<5.1Y6.9.1<1c9.4.9.2Y9.4.8.3Y9.4.', 24),
     sp('~~~5.3r9.3r4.4.5r7o5r3.^4.5r3&1o3&5r3.4.5r1&2B1Y2B1&5r3.^5.4r3&1Y3&4r4.9.1o2<1Y2<1o8.9.1o2N1Y2N1o8.6.3G1c2o1Y2o1c3G5.5.4G2c1r1Y1r2c4G4.4.3G2.2c1G1r1G2c2.3G3.4.2G3.2c1G1r1G2c3.2G3.4.2{3.2c1G1r1G2c3.2{3.4.2{2.2<1c1G1r1G1c2<2.2{3.6.1<1c4<1G2<1c3<1c4.6.3<1c1<1c1<1c3<1c2<4.6.1c2<8.1<1c5.6.2<1c8.1c1<5.7.2Y8.2Y5.6.3Y8.3Y4.', 24),
+    sp('4.3r1.7o1.3r5.3.5r3&1o3&5r4.3.5r1&2B1Y2B1&5r4.^3.5r3&1Y3&5r1.2{1.3.5r3o1Y3o5r1.2{1.4.4r1o2<1Y2<1o4r2.2G1.8.1o2N1Y2N1o4.3G2.9.2o1Y2o3.5G2.8.2c1r1Y1r2c5G4.7.1G2c3r2c4G5.5.3G2c1G1r1G2c9.4.3G1.2c1G1r1G2c9.3.3G2.2c1G1r1G2c9.3.2G3.2c1G1r1G1c1<1c8.2.3G4.1<2G2<1c1<8.1.2{1G5.1<1c1<1c3<1c7.1.2{5.1c2<3.1c2<7.8.1<1c4.1<1c8.8.2<4.1c1<8.8.1c2<3.2Y8.8.2<1c3.3Y7.9.2Y9.4.8.3Y9.4.', 24),
     sp('6.3r1.7o2r5.5.5r1o3&1o3&2r4.5.5r1o1&2B1Y2B1&2r4.^5.5r1o3&1Y3&2r4.5.5r4o1Y2o3r4.6.4r1o3<1Y1<1o2r5.9.1.1o3N1Y1N1o7.9.2.3o1Y1o8.8.2G2c2r1Y1c1G7.7.3G2c3r1c1G7.7.2G1.2c1G1r1G1c1G7.^7.2G1.2c1G1r1G1c2G6.7.3G1{1c1G1r1G1c2G1{5.8.1G2{1<3G1<1.2{5.9.1.1<1c1<1c2<8.6.1Y1c1<1.5<1c8.6.1Y3<1c1<1c1<1c1<8.6.2Y1c2<1c1<1.3<7.6.1Y2.1<1c2<2.1c1<7.9.6.1<1c7.9.6.2Y7.9.6.3Y6.', 24),
   ]],
 ];
@@ -326,7 +326,7 @@ function create() {
   G.uiCam.ignore([G.wrldL]);
 
   G.turnTxt = cTxt(s, W / 2, 90, '', 22, '#fff200', 1).setAlpha(0);
-  for (let i = 0; i < 2; i++) players[i].cTxt = cTxt(s, i ? 650 : 150, 46, '', 16, i ? '#77dd55' : '#ff5577', 1);
+  for (let i = 0; i < 2; i++) players[i].cTxt = cTxt(s, i ? 650 : 150, 46, '', 16, i ? '#52ad34' : '#da2d4f', 1);
   G.hudL.add([G.tugGfx, ...players[0].arrows, ...players[1].arrows, G.turnTxt, players[0].cTxt, players[1].cTxt]);
   G.hudL.setVisible(0);
 
@@ -530,9 +530,10 @@ function drawTugGfx() {
   fRect(g, C.p1H, 1.0, bx, by, fillW, bh);
   fRect(g, C.p2H, 1.0, mx, by, bw - fillW, bh);
 
-  // Draw sprite busts pushing each other (scaled x4, 8 rows = 32px height)
-  if (players[0]?.sprites) dsp(g, players[0].sprites[0], mx - 30, by + 48, true, false, 8, 4);
-  if (players[1]?.sprites) dsp(g, players[1].sprites[0], mx + 30, by + 48, true, true, 8, 4);
+  // Draw sprite busts pushing each other (scaled x5, 8 rows = 40px; bar is 32px so they overflow slightly)
+  const mcy = by + bh / 2;
+  if (players[0]?.sprites) dsp(g, players[0].sprites[0], mx - 16, mcy, true, false, 8, 5);
+  if (players[1]?.sprites) dsp(g, players[1].sprites[0], mx + 16, mcy, true, true, 8, 5);
 }
 
 function drawArrowGfx(s) {
@@ -1333,7 +1334,7 @@ function updateCamera() {
   } else if (state.v === STATE.WIN) {
     tx = state.winner === 0 ? 300 : 500;
     ty = 350;
-    tz = 1.35;
+    tz = 1.2;
   }
   G.camX += (tx - G.camX) * .07;
   G.camY += (ty - G.camY) * .07;
