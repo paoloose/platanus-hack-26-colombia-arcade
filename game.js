@@ -154,7 +154,7 @@ function dsp(gfx, sData, x, y, shadow = false, flipX = false, maxRows = null, sc
   if (!sData) return;
   const h = maxRows ? Mmin(sData.length, maxRows) : sData.length;
   const w = sData[0]?.length || 0;
-  const cx = w >> 1, cy = (sData.length) >> 1;
+  const cx = w >> 1, cy = h >> 1;
   const draw = (ox, oy, isShadow) => {
     for (let r = 0; r < h; r++) {
       for (let c = 0; c < w; c++) {
